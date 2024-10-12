@@ -1,9 +1,12 @@
 import Image from "next/image";
 import tweet1 from "@/public/tweet1.png";
 import { ChevronRight } from "lucide-react";
+import Link from "next/link";
 
 export default function ImportReview() {
   return (
+    <Link  href={"/dashboard/import/twitter"}>
+    
     <div className="hover:cursor-pointer">
       <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-800">
         Import a review
@@ -24,5 +27,6 @@ export default function ImportReview() {
         </div>
       </div>
     </div>
+    </Link>
   );
 }

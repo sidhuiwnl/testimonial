@@ -16,6 +16,8 @@ import Image from "next/image";
 import vagabond from "@/public/vagabond.jpg";
 ;
 import Link from "next/link";
+import { AvatarImage } from "@radix-ui/react-avatar";
+import { Avatar, AvatarFallback } from "./ui/avatar";
 
 
 interface SidebarItemProps {
@@ -97,13 +99,10 @@ const Sidebar: React.FC = () => {
       </div>
 
       <div className="p-4  border-t border-gray-200 flex items-center space-x-2">
-        <Image
-          src={vagabond}
-          width={20}
-          height={20}
-          className="rounded-full ml-7"
-          alt="avatar"
-        />
+        <Avatar>
+          <AvatarImage  src="https://imgs.search.brave.com/2ZSKfF_iHCmI-XPOALC3R4H0tn0plh1I-x-WN00s7sw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDY4MTMw/MzMuanBn"/>
+          <AvatarFallback>Vagabond</AvatarFallback>
+        </Avatar>
         <span className="text-sm text-gray-800 font-medium antialiased">Sidharth babu</span>
       </div>
      
