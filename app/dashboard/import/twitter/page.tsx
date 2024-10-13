@@ -91,8 +91,11 @@
               className="flex-grow bg-white h-10 px-3"
               onChange={(e) => {
                 const tweetId = getTweetId(e.target.value);
-                tweetId ? setTweetUrl(tweetId) : setTweetUrl("");
+                if (tweetId) {
+                  setTweetUrl(tweetId);
+                }
               }}
+              
               required
             />
             <Button
