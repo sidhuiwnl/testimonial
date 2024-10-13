@@ -3,7 +3,7 @@ import { ChevronRight } from "lucide-react";
 
 export default function HeroSection() {
   return (
-    <div className="flex flex-col  items-center py-24">
+    <div className="flex flex-col items-center py-24">
       <p className="text-sm text-green-700 font-semibold antialiased mb-5">
         SaaS Reviews in Seconds
       </p>
@@ -14,7 +14,7 @@ export default function HeroSection() {
         High-Quality Reviews As Code
       </h1>
       <p className="text-sm max-w-3xl mt-9 text-slate-600 text-center mb-10">
-        Gain full control of your brand's reputation with static, pre-optimized
+        Gain full control of your brand&apos;s reputation with static, pre-optimized
         review components. Simply copy & paste to showcase compelling reviews on
         your site.
       </p>
