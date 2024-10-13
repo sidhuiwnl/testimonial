@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 
 import "./globals.css";
-import Sidebar from "@/components/Dashboard";
-import BreadcrumbComp from "@/components/Crumbs";
-import { Merriweather, Lora } from "next/font/google";
+
+import {Lora } from "next/font/google";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",

@@ -28,7 +28,7 @@ function TwitterForm() {
     null
   );
 
-  const { data: tweet, isLoading, error } = useTweet(tweetUrl);
+  const { data: tweet} = useTweet(tweetUrl);
 
   function getTweetId(url: string) {
     const regex = /\/status\/(\d+)/;

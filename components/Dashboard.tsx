@@ -12,9 +12,7 @@ import {
   LucideIcon,
   Beer,
 } from "lucide-react";
-import Image from "next/image";
-import vagabond from "@/public/vagabond.jpg";
-;
+
 import Link from "next/link";
 import { AvatarImage } from "@radix-ui/react-avatar";
 import { Avatar, AvatarFallback } from "./ui/avatar";
