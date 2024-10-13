@@ -11,7 +11,7 @@ import { useTweet } from "react-tweet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { XIcon } from "lucide-react";
-
+import { Trash2 } from "lucide-react";
 
 export default function TwitterInt() {
   return <TwitterForm />;
@@ -23,12 +23,12 @@ function TwitterForm() {
   const [handle, setHandle] = useState("");
   const [tweetContent, setTweetContent] = useState("");
   const [isVerified, setIsVerified] = useState(false);
-  const [userImage, setUserImage] = useState<string | ArrayBuffer | null>(null);
-  const [mediaFile, setMediaFile] = useState<string | null>(null);
+  const [userImage, setUserImage] = useState<string | null>(null);
+  const [mediaFiles, setMediaFiles] = useState<string[] | undefined | null>(
+    null
+  );
 
   const { data: tweet, isLoading, error } = useTweet(tweetUrl);
-
-  console.log(tweet);
 
   function getTweetId(url: string) {
     const regex = /\/status\/(\d+)/;
@@ -43,22 +43,35 @@ function TwitterForm() {
       setTweetContent(tweet.text);
       setIsVerified(tweet.user.is_blue_verified || false);
       setUserImage(tweet.user.profile_image_url_https);
-      setMediaFile(tweet.mediaDetails[0].media_url_https);
     }
+
+    const images = tweet?.mediaDetails?.map((image) => image.media_url_https);
+    setMediaFiles(images);
   }
 
-  console.log(mediaFile);
-
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files[0];
-    if (file) {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
       const reader = new FileReader();
+
       reader.onloadend = () => {
-        setUserImage(reader.result);
+        if (typeof reader.result === "string") {
+          setUserImage(reader.result);
+        }
       };
+
       reader.readAsDataURL(file);
     }
   };
+
+  function reset(){
+    setUsername("");
+      setHandle("");
+      setTweetContent("");
+      setIsVerified(false);
+      setUserImage(null);
+      setMediaFiles(null);
+  }
 
   return (
     <div className="w-[1100px] space-y-5">
@@ -203,12 +216,23 @@ function TwitterForm() {
             Images to display in the tweet.
           </p>
         </div>
-        {mediaFile ? <TweetImage mediaFile={mediaFile} /> : <NonTweetImage />}
+        {mediaFiles ? (
+          <TweetImage mediaFiles={mediaFiles} />
+        ) : (
+          <NonTweetImage />
+        )}
       </div>
       <hr />
       <div className="flex space-x-2 justify-end">
-        <Button className="hover:bg-red-500">Reset</Button>
-        <Button>Import Tweet</Button>
+        <Button 
+        onClick={reset}
+        className="hover:bg-red-500 bg-white text-black w-30 px-4 h-11 text-center">
+          <Trash2 className=" w-8 h-4"/>
+          Reset
+          </Button>
+        <Button className="bg-teal-900 text-white hover:bg-teal-800 w-40 h-11 px-4 py-2 text-sm">
+          Import Tweet
+        </Button>
       </div>
     </div>
   );
@@ -236,30 +260,33 @@ function NonTweetImage() {
     </div>
   );
 }
-function TweetImage({ mediaFile }: { mediaFile: string }) {
+function TweetImage({ mediaFiles }: { mediaFiles: string[] }) {
   return (
-    <div className="w-3/4 flex flex-row space-x-2">
-      
-        <div className="relative w-40 h-40 border border-gray-900 flex items-center justify-center rounded-xl  bg-gray-900">
+    <div className="w-3/4  flex flex-row space-x-2">
+      {mediaFiles.map((mediaFile, index) => (
+        <div
+          key={index}
+          className="relative w-40 h-40 border border-gray-900 flex items-center justify-center rounded-xl  bg-gray-900"
+        >
           <Image
             src={mediaFile}
             alt="user content"
             layout="fill"
             objectFit="contain"
             className="p-2"
-           
-            
           />
           <XIcon className="absolute top-1 right-1 w-5 h-5 text-white cursor-pointer" />
         </div>
-     
-        <Label
-          htmlFor="dropzone-file"
-          className="w-40 h-40 flex items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
-        >
-          <span className="text-gray-400"><ImagePlus/></span>
-        </Label>
-     
+      ))}
+
+      <Label
+        htmlFor="dropzone-file"
+        className="w-40 h-40 flex items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
+      >
+        <span className="text-gray-400">
+          <ImagePlus />
+        </span>
+      </Label>
     </div>
   );
 }

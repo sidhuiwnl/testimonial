@@ -4,7 +4,7 @@ export default function Home() {
   
   return (
    <div>
-    <Link href={`/space/sidharth`} >Go to youadadar space</Link>
+    <Link href={`/dashboard`} >Go to youadadar space</Link>
    </div>
   );
 }

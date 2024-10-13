@@ -10,6 +10,15 @@ const nextConfig = {
                 hostname : "pbs.twimg.com"
             }
         ]
+    },
+    async redirects(){
+        return[
+            {
+                source: '/dashboard',
+                destination: '/dashboard/reviews',
+                permanent: false, // Set to true if it's a permanent redirect
+            }
+        ]
     }
 };
 

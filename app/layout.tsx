@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Sidebar from "@/components/Dashboard";
 import BreadcrumbComp from "@/components/Crumbs";
-import  { Merriweather,Lora } from "next/font/google"
+import { Merriweather, Lora } from "next/font/google";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -24,9 +24,9 @@ export const metadata: Metadata = {
 };
 
 const Lol = Lora({
-weight : "500",
-subsets: ["latin"],
-})
+  weight: "500",
+  subsets: ["latin"],
+});
 
 export default function RootLayout({
   children,
@@ -35,19 +35,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${Lol.className} antialiased flex`}>
-        <div className="flex w-full h-screen">
-          <Sidebar />
-
-          <div className="flex flex-col flex-grow">
-            <div className="sticky top-0 z-10">
-              <BreadcrumbComp />
-            </div>
-
-            <div className="flex-grow p-6 overflow-auto">{children}</div>
-          </div>
-        </div>
-      </body>
+      <body className={`${Lol.className} antialiased flex`}>{children}</body>
     </html>
   );
 }
