@@ -10,7 +10,9 @@ const config: Config = {
   theme: {
   	extend: {
   		animation: {
-  			move: 'move 5s linear infinite'
+  			move: 'move 5s linear infinite',
+			
+			  
   		},
   		keyframes: {
   			move: {

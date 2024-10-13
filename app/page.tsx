@@ -1,10 +1,13 @@
-import Link from "next/link";
+
+import HomeBar from "@/components/HomeBar";
+import HeroSection from "@/components/HeroSection";
 
 export default function Home() {
   
   return (
    <div>
-    <Link href={`/dashboard`} >Go to youadadar space</Link>
+    <HomeBar/>
+    <HeroSection/>  
    </div>
   );
 }

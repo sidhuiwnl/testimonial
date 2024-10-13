@@ -83,7 +83,7 @@ const Sidebar: React.FC = () => {
         </SidebarSection>
 
         <SidebarSection title="Manage">
-          <SidebarItem icon={Heart} text={<span className="font-semibold text-sm text-zinc-600 antialiased">My reviews</span>} href="/my-reviews" />
+          <SidebarItem icon={Heart} text={<span className="font-semibold text-sm text-zinc-600 antialiased">My reviews</span>} href="/reviews" />
         </SidebarSection>
 
         <SidebarSection title="Export">
