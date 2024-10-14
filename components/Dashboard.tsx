@@ -8,10 +8,12 @@ import {
   Heart,
   Star,
   ArrowRight,
-  Key,
+  
   LucideIcon,
   Beer,
 } from "lucide-react";
+
+
 
 import Link from "next/link";
 import { AvatarImage } from "@radix-ui/react-avatar";
@@ -59,7 +61,7 @@ const SidebarSection: React.FC<SidebarSectionProps> = ({ title, children }) => (
   </div>
 );
 
-const Sidebar: React.FC = () => {
+const Sidebar = ({username,avatar_url} : {username : string | undefined , avatar_url : string | undefined}) => {
   
   
   return (
@@ -78,8 +80,8 @@ const Sidebar: React.FC = () => {
       <div className="flex-grow overflow-y-auto">
         <SidebarSection title="Collect">
           <SidebarItem icon={MessageCircle} text={<span className="font-semibold text-sm text-zinc-600 leading-6 antialiased">Collection Page</span>} href="/collection" />
-          <SidebarItem icon={Mail} text={<span className="font-semibold text-sm text-zinc-600 antialiased">Automated Emails</span>} isNew href="/automated-emails" />
-          <SidebarItem icon={ImportIcon} text={<span className="font-semibold text-sm text-zinc-600 antialiased">Import Review</span>} isNew href="/dashboard/import" />
+          <SidebarItem icon={Mail} text={<span className="font-semibold text-sm text-zinc-600 antialiased">Automated Emails</span>}  href="/automated-emails" />
+          <SidebarItem icon={ImportIcon} text={<span className="font-semibold text-sm text-zinc-600 antialiased">Import Review</span>}  href="/dashboard/import" />
         </SidebarSection>
 
         <SidebarSection title="Manage">
@@ -87,25 +89,25 @@ const Sidebar: React.FC = () => {
         </SidebarSection>
 
         <SidebarSection title="Export">
-          <SidebarItem icon={Star} text={<span className="font-semibold text-sm text-zinc-700 antialiased">Wall of Love</span>} isNew href="/wall-of-love" />
+          <SidebarItem icon={Star} text={<span className="font-semibold text-sm text-zinc-700 antialiased">Wall of Love</span>}  href="/wall-of-love" />
           <SidebarItem icon={ArrowRight} text={<span className="font-semibold text-sm text-zinc-700 antialiased disabled:opacity-75">Single Review</span>} href="/single-review" />
         </SidebarSection>
 
-        <SidebarSection title="Automation">
+        {/* <SidebarSection title="Automation">
           <SidebarItem icon={Key} text={<span className="font-semibold text-sm text-zinc-600 antialiased">API Key</span>} href="/api-key" />
-        </SidebarSection>
+        </SidebarSection> */}
       </div>
-
       <div className="p-4  border-t border-gray-200 flex items-center space-x-2">
         <Avatar>
-          <AvatarImage  src="https://imgs.search.brave.com/2ZSKfF_iHCmI-XPOALC3R4H0tn0plh1I-x-WN00s7sw/rs:fit:860:0:0:0/g:ce/aHR0cHM6Ly93YWxs/cGFwZXJjYXZlLmNv/bS93cC93cDY4MTMw/MzMuanBn"/>
+          <AvatarImage  src={avatar_url}/>
           <AvatarFallback>Vagabond</AvatarFallback>
         </Avatar>
-        <span className="text-sm text-gray-800 font-medium antialiased">Sidharth babu</span>
+        <span className="text-sm text-gray-800 font-medium antialiased">{(username)}</span>
       </div>
-     
     </div>
   );
 };
+
+
 
 export default Sidebar;

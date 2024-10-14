@@ -1,14 +1,17 @@
 import Sidebar from "@/components/Dashboard";
 import BreadcrumbComp from "@/components/Crumbs";
+import { validateRequest } from "@/lib/auth";
 
-export default function DashboardLayout({
+export default async function DashboardLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
+
+  const { user } = await validateRequest();
   return (
     <div className="flex w-full h-screen">
-      <Sidebar />
+      <Sidebar username={user?.username} avatar_url={user?.avatar_url} />
       <div className="flex flex-col flex-grow">
         <div className="sticky top-0 z-10">
           <BreadcrumbComp />

@@ -1,9 +1,10 @@
 import Link from "next/link";
 import { Button } from "./ui/button";
+import { ChevronRight } from "lucide-react";
 
 export default function HomeBar(){
     return(
-        <div className="w-screen border flex justify-around p-2 items-center">
+        <div className="w-screen flex justify-around p-5 items-center">
             <div className="underline text-sm">
                 Testimonial
             </div>
@@ -12,10 +13,14 @@ export default function HomeBar(){
                 <Link href={"/dashboard/reviews"}>
                 
                 <Button 
-                className="bg-teal-800 hover:bg-teal-800"
-                >Dashboard</Button>
+                className="w-[120px] rounded-lg bg-gradient-to-b from-neutral-600 to-neutral-900 text-white shadow-md hover:brightness-105 hover:shadow-lg transition-all duration-200 ease-in-out h-10 px-4 py-2 "
+                >Dashboard
+                <ChevronRight/>
+                </Button>
                 </Link>
             </div>
         </div>
     )
 }
+
+
