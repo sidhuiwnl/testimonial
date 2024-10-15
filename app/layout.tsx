@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import {Lora } from "next/font/google";
+import { Lora } from "next/font/google";
 
 // const geistSans = localFont({
 //   src: "./fonts/GeistVF.woff",
@@ -20,6 +20,7 @@ export const metadata: Metadata = {
   title: "Collect the reviews",
   description:
     "Collect your reviews with ease and speed, and share them with the world",
+  
 };
 
 const Lol = Lora({
