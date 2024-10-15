@@ -67,8 +67,8 @@ const Sidebar = ({username,avatar_url} : {username : string | undefined , avatar
   return (
     <div className="w-[400px] bg-white h-screen border-r border-gray-200 flex flex-col">
       <div className="p-4 flex items-center space-x-3 border-b mb-4">
-        <div className="w-9 h-9 ml-7 bg-teal-500 rounded-full flex justify-center items-center">
-          <Beer className="text-white" />
+        <div className="w-9 h-9 ml-7  rounded-full flex justify-center items-center">
+          <Beer/>
         </div>
         <div>
           <h2 className="font-semibold text-sm text-gray-700 antialiased">

@@ -59,3 +59,27 @@ export async function getUserImages({ mediaFiles } : { mediaFiles : string[] }){
         })
     }
 }
+
+export async function getReviews(userId : string | undefined){
+    const { user } = await validateRequest();
+    if(!user){
+        console.error("Unauthoerized");
+
+    }else{
+       const tweetsText =  await client.tweetReview.findMany({
+            where : {
+                userId : userId
+            }
+        })
+        const tweetMedia = await client.images.findMany({
+            where : {
+                userId : userId
+            }
+        })
+
+        return {
+            tweetMedia,
+            tweetsText
+        }
+    }
+}
