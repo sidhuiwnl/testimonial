@@ -13,11 +13,15 @@
   import { XIcon } from "lucide-react";
   import { Trash2 } from "lucide-react";
 
+ 
+  import { addTweet, getUserImages } from "@/server/queries";
+
   export default function TwitterInt() {
     return <TwitterForm />;
   }
 
   function TwitterForm() {
+   
     const [tweetUrl, setTweetUrl] = useState("");
     const [username, setUsername] = useState("");
     const [handle, setHandle] = useState("");
@@ -47,6 +51,16 @@
 
       const images = tweet?.mediaDetails?.map((image) => image.media_url_https);
       setMediaFiles(images);
+    }
+
+    async function addData(){
+      await addTweet({
+        username,handle,tweetContent,isVerified,userImage : userImage ?? ""
+      })
+
+      await getUserImages({
+        mediaFiles : mediaFiles ?? []
+      })
     }
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -233,7 +247,10 @@
             <Trash2 className=" w-8 h-4"/>
             Reset
             </Button>
-          <Button className="bg-teal-900 text-white hover:bg-teal-800 w-40 h-11 px-4 py-2 text-sm">
+          <Button 
+          className="bg-teal-900 text-white hover:bg-teal-800 w-40 h-11 px-4 py-2 text-sm"
+          onClick={addData}
+          >
             Import Tweet
           </Button>
         </div>
@@ -263,6 +280,7 @@
       </div>
     );
   }
+  
   function TweetImage({ mediaFiles }: { mediaFiles: string[] }) {
     return (
       <div className="w-3/4  flex flex-row space-x-2">

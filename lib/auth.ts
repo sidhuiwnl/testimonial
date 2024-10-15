@@ -3,10 +3,10 @@ import { PrismaAdapter } from "@lucia-auth/adapter-prisma";
 import { cookies } from "next/headers";
 import { cache } from "react";
 import { GitHub } from "arctic";
-import { PrismaClient } from "@prisma/client";
+
 import type { Session, User } from "lucia";
 
-const client = new PrismaClient();
+import { client } from "./prisma";
 
  const adapter = new PrismaAdapter(client.session, client.user);
 

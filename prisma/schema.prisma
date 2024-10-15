@@ -19,6 +19,8 @@ model User {
   github_id Int   @unique
   username  String
   avatar_url  String
+  tweetReviews  TweetReview[]
+  images       Images[]
 }
 
 model Session {
@@ -27,4 +29,24 @@ model Session {
   expiresAt DateTime
 
   user      User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+}
+
+model TweetReview{
+  id        String @id
+  profile   String
+  username  String
+  handle    String
+  tweetContent  String
+  verified  Boolean
+  userId    String
+  user      User  @relation(references: [id],fields: [userId], onDelete: Cascade)
+  
+
+}
+
+model Images {
+  id    String @id
+  image  String
+  userId  String
+  user    User @relation(references: [id],fields: [userId],onDelete: Cascade)
 }
