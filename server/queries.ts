@@ -2,7 +2,7 @@
 
 import { client } from "@/lib/prisma";
 import { validateRequest } from "@/lib/auth";
-
+import { redirect } from "next/navigation";
 
 export async function addTweet({
   username,
@@ -58,6 +58,10 @@ export async function getUserImages({ mediaFiles } : { mediaFiles : string[] }){
             })
         })
     }
+
+    redirect("/dashboard/reviews")
+
+
 }
 
 export async function getReviews(userId : string | undefined){
