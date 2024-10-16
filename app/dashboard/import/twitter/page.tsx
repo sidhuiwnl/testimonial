@@ -34,7 +34,7 @@
 
     const { data: tweet} = useTweet(tweetUrl);
 
-    console.log(tweet)
+    
 
     function getTweetId(url: string) {
       const regex = /\/status\/(\d+)/;
