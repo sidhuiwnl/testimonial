@@ -41,7 +41,7 @@ model TweetReview{
   verified  Boolean
   userId    String
   user      User  @relation(references: [id],fields: [userId], onDelete: Cascade)
-  
+  createdAt  DateTime
 
 }
 

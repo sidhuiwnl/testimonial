@@ -34,7 +34,8 @@ export async function addTweet({
               tweetContent : tweetContent,
               verified : isVerified,
               userId : user?.id,
-              id : JSON.stringify(Math.floor(Math.random() * 100000))
+              id : JSON.stringify(Math.floor(Math.random() * 100000)),
+              createdAt : new Date()
             }
         })
     }

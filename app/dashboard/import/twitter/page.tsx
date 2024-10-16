@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { ImagePlus } from "lucide-react";
 import { useState } from "react";
-import { useTweet } from "react-tweet";
+import { Tweet, useTweet } from "react-tweet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { XIcon } from "lucide-react";
@@ -32,6 +32,8 @@ function TwitterForm() {
 
   const { data: tweet } = useTweet(tweetUrl);
 
+  
+
   function getTweetId(url: string) {
     const regex = /\/status\/(\d+)/;
     const match = url.match(regex);
@@ -42,7 +44,7 @@ function TwitterForm() {
     if (tweet) {
       setUsername(tweet.user.name);
       setHandle(tweet.user.screen_name);
-      setTweetContent(tweet.text);
+      setTweetContent(tweet.text.replace(/https?:\/\/[^\s]+/g, '').trim());
       setIsVerified(tweet.user.is_blue_verified || false);
       setUserImage(tweet.user.profile_image_url_https);
     }

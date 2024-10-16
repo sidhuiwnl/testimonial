@@ -6,6 +6,9 @@ import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
 import { AvatarFallback, AvatarImage } from "./ui/avatar";
 import { Cog } from "lucide-react";
+import { format } from "date-fns"; 
+
+
 
 interface TweetInfo {
   profile: string;
@@ -15,6 +18,7 @@ interface TweetInfo {
   verified: boolean;
   id: string;
   userId: string;
+  createdAt: Date;
 }
 
 interface ReviewProps {
@@ -39,9 +43,9 @@ export default function Review({ userId, setTweetCount }: ReviewProps) {
       {tweetsInfos?.map((tweetsInfo) => (
         <div
           key={tweetsInfo.id}
-          className="flex justify-around  items-center space-x-4 p-4 border-b"
+          className="flex justify-around items-center space-x-4 p-4 border-b"
         >
-          <div className="flex flex-col">
+          <div className="flex flex-col space-y-2 items-start">
             <Avatar className="h-12 w-12">
               <AvatarImage
                 src={tweetsInfo.profile}
@@ -57,13 +61,16 @@ export default function Review({ userId, setTweetCount }: ReviewProps) {
             <span className="text-gray-500">@{tweetsInfo.handle}</span>
           </div>
 
-          <div className="flex flex-col w-[500px] ">
-            <p className="text-left">{tweetsInfo.tweetContent}</p>
-            
+          <div className="flex flex-col w-[450px] space-y-3 ">
+            <p className="text-start">{tweetsInfo.tweetContent}</p>
+            <p className="text-gray-500 text-medium">
+              
+            📅 {format(new Date(tweetsInfo.createdAt), "MMM d, yyyy")}
+            </p>
           </div>
           <div className="flex flex-col space-y-2">
             <Button className="w-[120px] rounded-lg bg-gradient-to-b space-x-1 from-neutral-600 to-neutral-900 text-white shadow-md hover:brightness-105 hover:shadow-lg transition-all duration-200 ease-in-out h-10 px-4 py-2 ">
-              <Cog/>
+              <Cog />
               Options
             </Button>
             <Button variant="ghost">Approved</Button>
