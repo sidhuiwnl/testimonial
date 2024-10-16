@@ -34,6 +34,8 @@
 
     const { data: tweet} = useTweet(tweetUrl);
 
+    
+
     function getTweetId(url: string) {
       const regex = /\/status\/(\d+)/;
       const match = url.match(regex);
@@ -287,16 +289,16 @@
         {mediaFiles.map((mediaFile, index) => (
           <div
             key={index}
-            className="relative w-40 h-40 border border-gray-900 flex items-center justify-center rounded-xl  bg-gray-900"
+            className="relative w-40 h-40flex items-center justify-center rounded-xl"
           >
             <Image
               src={mediaFile}
               alt="user content"
               layout="fill"
-              objectFit="contain"
-              className="p-2"
+              objectFit="cover"
+              className="rounded-xl "
             />
-            <XIcon className="absolute top-1 right-1 w-5 h-5 text-white cursor-pointer" />
+            <XIcon className="absolute top-1 right-1 w-5 h-5 text-white cursor-pointer bg-slate-400 rounded-full p-1 hover:bg-white hover:text-black" />
           </div>
         ))}
 
