@@ -22,6 +22,7 @@ export async function GET(request: Request): Promise<Response> {
     const githubUserResponse = await fetch("https://api.github.com/user", {
       headers: {
         Authorization: `Bearer ${tokens.accessToken}`,
+        
       },
     });
     const githubUser: GitHubUser = await githubUserResponse.json();
