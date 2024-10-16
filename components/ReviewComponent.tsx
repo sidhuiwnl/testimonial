@@ -23,6 +23,7 @@ export default function Review({ userId }: { userId: string | undefined }) {
     const fetchData = async () => {
       const data = await getReviews(userId);
       setTweetsInfos(data?.tweetsText);
+      console.log(data)
     };
     if (userId) fetchData();
   }, [userId]);
@@ -35,7 +36,7 @@ export default function Review({ userId }: { userId: string | undefined }) {
           className="flex items-center space-x-4 p-4 border-b"
         >
           <Avatar className="h-12 w-12">
-            <AvatarImage src={tweetsInfo.profile} alt={tweetsInfo.username} />
+            <AvatarImage src={tweetsInfo.profile} alt={tweetsInfo.username} className="rounded-full object-contain" />
             <AvatarFallback>{tweetsInfo.username}</AvatarFallback>
           </Avatar>
           <div>
