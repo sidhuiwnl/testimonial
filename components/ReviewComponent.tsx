@@ -23,7 +23,7 @@ export default function Review({ userId }: { userId: string | undefined }) {
     const fetchData = async () => {
       const data = await getReviews(userId);
       setTweetsInfos(data?.tweetsText);
-      console.log(data)
+      
     };
     if (userId) fetchData();
   }, [userId]);
