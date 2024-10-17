@@ -32,8 +32,6 @@ function TwitterForm() {
 
   const { data: tweet } = useTweet(tweetUrl);
 
-  
-
   function getTweetId(url: string) {
     const regex = /\/status\/(\d+)/;
     const match = url.match(regex);
@@ -44,9 +42,9 @@ function TwitterForm() {
     if (tweet) {
       setUsername(tweet.user.name);
       setHandle(tweet.user.screen_name);
-      setTweetContent(tweet.text.replace(/https?:\/\/[^\s]+/g, '').trim());
+      setTweetContent(tweet.text.replace(/https?:\/\/[^\s]+/g, "").trim());
       setIsVerified(tweet.user.is_blue_verified || false);
-      setUserImage(tweet.user.profile_image_url_https);
+      setUserImage(tweet.user.profile_image_url_https.replace("_normal", ""));
     }
 
     const images = tweet?.mediaDetails?.map((image) => image.media_url_https);
