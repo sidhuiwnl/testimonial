@@ -36,18 +36,21 @@ model TweetReview{
   id        String @id
   profile   String
   username  String
-  handle    String
+  handle    String @unique
   tweetContent  String
   verified  Boolean
   userId    String
   user      User  @relation(references: [id],fields: [userId], onDelete: Cascade)
   createdAt  DateTime
+  images    Images[]
 
 }
 
 model Images {
-  id    String @id
-  image  String
+  id      String @id
+  image   String
   userId  String
   user    User @relation(references: [id],fields: [userId],onDelete: Cascade)
+  tweetName String
+  tweetReview  TweetReview @relation(references: [handle],fields: [tweetName],onDelete: Cascade)
 }

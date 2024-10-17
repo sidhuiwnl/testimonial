@@ -52,17 +52,26 @@ function TwitterForm() {
   }
 
   async function addData() {
-    await addTweet({
-      username,
-      handle,
-      tweetContent,
-      isVerified,
-      userImage: userImage ?? "",
-    });
-
-    await getUserImages({
-      mediaFiles: mediaFiles ?? [],
-    });
+    try {
+      const newTweet = await addTweet({
+        username,
+        handle,
+        tweetContent,
+        isVerified,
+        userImage: userImage ?? "",
+      });
+  
+      if (newTweet?.id) {
+        await getUserImages({
+          mediaFiles: mediaFiles ?? [],
+          tweetId: newTweet.id, // Pass the tweetId from the created tweet
+        });
+      } else {
+        console.error("Failed to retrieve the tweet ID");
+      }
+    } catch (error) {
+      console.error("Error adding tweet or uploading images:", error);
+    }
   }
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
