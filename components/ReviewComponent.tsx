@@ -36,7 +36,7 @@ export default function Review({ userId, setTweetCount }: ReviewProps) {
       setTweetCount(data?.tweetsText.length || 0);
     };
     if (userId) fetchData();
-  }, [userId]);
+  }, [userId,setTweetCount]);
 
   return (
     <div>

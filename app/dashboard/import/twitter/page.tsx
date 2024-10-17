@@ -7,7 +7,7 @@ import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
 import { ImagePlus } from "lucide-react";
 import { useState } from "react";
-import { Tweet, useTweet } from "react-tweet";
+import { useTweet } from "react-tweet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { XIcon } from "lucide-react";
