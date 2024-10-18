@@ -21,7 +21,7 @@ model User {
   username  String
   avatar_url  String
   tweetReviews  TweetReview[]
-  images       Images[]
+  
 }
 
 model Session {
@@ -42,15 +42,8 @@ model TweetReview{
   userId    String
   user      User  @relation(references: [id],fields: [userId], onDelete: Cascade)
   createdAt  DateTime
-  images    Images[]
+  images    String[]
+  
 
 }
 
-model Images {
-  id      String @id
-  image   String
-  userId  String
-  user    User @relation(references: [id],fields: [userId],onDelete: Cascade)
-  tweetName String
-  tweetReview  TweetReview @relation(references: [handle],fields: [tweetName],onDelete: Cascade)
-}
