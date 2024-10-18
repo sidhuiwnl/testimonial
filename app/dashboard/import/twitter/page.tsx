@@ -97,9 +97,9 @@ function TwitterForm() {
   return (
     <div className="w-[1100px] space-y-5">
       <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-800">
-        Import Tweet
+        Tweet.
       </h1>
-      <div className="bg-teal-50 border border-teal-100 mt-7 p-5 rounded-lg">
+      <div className=" mt-7 p-5 rounded-lg">
         <div className="mb-4">
           <h2 className="text-base font-semibold">Pre-fill information</h2>
           <p className="text-sm text-gray-600">

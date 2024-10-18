@@ -33,6 +33,7 @@ interface TweetInfo {
   userId: string;
   createdAt: Date;
   images: string[];
+  status: "pending" | "approved";
 }
 
 interface ReviewProps {
@@ -46,12 +47,22 @@ export default function Review({ userId, setTweetCount }: ReviewProps) {
   useEffect(() => {
     const fetchData = async () => {
       const data = await getReviews(userId);
-      setTweetsInfos(data?.tweetsText);
+      setTweetsInfos(
+        data?.tweetsText.map((tweet) => ({ ...tweet, status: "pending" }))
+      );
 
       setTweetCount(data?.tweetsText.length || 0);
     };
     if (userId) fetchData();
   }, [userId, setTweetCount]);
+
+  function handleApprovalChange(id: string, status: "approved") {
+    setTweetsInfos((prevTweets) =>
+      prevTweets?.map((tweet) =>
+        tweet.id === id ? { ...tweet, status: status } : tweet
+      )
+    );
+  }
 
   return (
     <div className="space-y-2">
@@ -91,15 +102,19 @@ export default function Review({ userId, setTweetCount }: ReviewProps) {
             ))}
 
             <p className="text-gray-500 text-medium">
-              📅 {format(new Date(tweetsInfo.createdAt), "MMM d, yyyy")}
+              {format(new Date(tweetsInfo.createdAt), "MMM d, yyyy")}
             </p>
           </div>
 
           <div className="flex w-3/12 flex-col justify-end items-end space-y-2">
-            <DropDownMenus />
-            <Button variant="ghost" className="w-[120px] h-10 px-4 py-2 ">
-              Approved
-            </Button>
+            <DropDownMenus
+              onApprove={() => handleApprovalChange(tweetsInfo.id, "approved")}
+            />
+            <div className="bg-zinc-500/10 h-10 px-4 py-2 border rounded-md font-medium text-xs ">
+              {tweetsInfo.status === "approved"
+                ? "Approved ✅"
+                : "Approved Pending... 🏳️"}
+            </div>
           </div>
         </div>
       ))}
@@ -107,12 +122,12 @@ export default function Review({ userId, setTweetCount }: ReviewProps) {
   );
 }
 
-function DropDownMenus() {
+function DropDownMenus({ onApprove }: { onApprove: () => void }) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button className="w-[120px] rounded-lg bg-gradient-to-b space-x-1 from-neutral-600 to-neutral-900 text-white shadow-md hover:brightness-105 hover:shadow-lg transition-all duration-200 ease-in-out h-10 px-4 py-2 ">
-          <Cog className="mr-2" /> Options
+          Options
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[200px]">
@@ -127,7 +142,7 @@ function DropDownMenus() {
           Export
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={onApprove}>
           <CheckCheck />
           Approved
         </DropdownMenuItem>
