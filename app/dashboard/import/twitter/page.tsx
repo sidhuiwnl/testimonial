@@ -13,7 +13,7 @@ import Image from "next/image";
 import { XIcon } from "lucide-react";
 import { Trash2 } from "lucide-react";
 
-import { addTweet, getUserImages } from "@/server/queries";
+import { addTweet } from "@/server/queries";
 
 export default function TwitterInt() {
   return <TwitterForm />;
@@ -53,22 +53,16 @@ function TwitterForm() {
 
   async function addData() {
     try {
-      const newTweet = await addTweet({
+       await addTweet({
         username,
         handle,
         tweetContent,
         isVerified,
         userImage: userImage ?? "",
+        mediaFiles : mediaFiles ?? []
       });
   
-      if (newTweet?.id) {
-        await getUserImages({
-          mediaFiles: mediaFiles ?? [],
-          tweetId: newTweet.id, // Pass the tweetId from the created tweet
-        });
-      } else {
-        console.error("Failed to retrieve the tweet ID");
-      }
+     
     } catch (error) {
       console.error("Error adding tweet or uploading images:", error);
     }
@@ -97,6 +91,8 @@ function TwitterForm() {
     setUserImage(null);
     setMediaFiles(null);
   }
+
+  console.log(tweet)
 
   return (
     <div className="w-[1100px] space-y-5">

@@ -23,7 +23,6 @@ import {
 } from "@/components/ui/dropdown-menu";
 import Image from "next/image";
 
-
 interface TweetInfo {
   profile: string;
   username: string;
@@ -33,6 +32,7 @@ interface TweetInfo {
   id: string;
   userId: string;
   createdAt: Date;
+  images: string[];
 }
 
 interface ReviewProps {
@@ -40,27 +40,19 @@ interface ReviewProps {
   setTweetCount: (count: number) => void;
 }
 
-interface TweetMedia{
-  userId : string;
-  id : string;
-  image : string;
-  tweetName : string;
-}
-
 export default function Review({ userId, setTweetCount }: ReviewProps) {
   const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[]>();
-  const [tweetMedias,setTweetMedias] = useState<TweetMedia[] | undefined>(undefined);
+
   useEffect(() => {
     const fetchData = async () => {
       const data = await getReviews(userId);
       setTweetsInfos(data?.tweetsText);
-      setTweetMedias(data?.tweetMedia);
+
       setTweetCount(data?.tweetsText.length || 0);
     };
     if (userId) fetchData();
   }, [userId, setTweetCount]);
 
-  console.log(tweetMedias)
   return (
     <div className="space-y-2">
       {tweetsInfos?.map((tweetsInfo) => (
@@ -86,17 +78,18 @@ export default function Review({ userId, setTweetCount }: ReviewProps) {
 
           <div className="flex flex-col w-6/12 space-y-3 ">
             <p className="text-start">{tweetsInfo.tweetContent}</p>
-            {/* {tweetMedias?.filter(media => media.tweetId === tweetsInfo.id )
-              .map((media) => (
-                <Image
-                  key={media.id}
-                  src={media.image}
-                  alt="Tweet Media"
-                  width={100}
-                  height={100}
-                  className="rounded-lg object-contain max-h-64"
-                />
-            ))} */}
+
+            {tweetsInfo.images.map((image) => (
+              <Image
+                key={tweetsInfo.id}
+                src={image}
+                alt="Tweet Media"
+                width={500}
+                height={500}
+                className="rounded-lg object-contain max-h-64 w-[200px]"
+              />
+            ))}
+
             <p className="text-gray-500 text-medium">
               📅 {format(new Date(tweetsInfo.createdAt), "MMM d, yyyy")}
             </p>
