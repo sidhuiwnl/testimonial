@@ -44,6 +44,17 @@ export async function addTweet({
  
 }
 
+export async function updateTweetStatus(id : string,status : string){
+  return await client.tweetReview.update({
+    where : {
+      id : id
+    },
+    data : {
+      status : status
+    }
+  })
+}
+
 export async function getReviews(userId: string | undefined) {
   const { user } = await validateRequest();
   if (!user) {

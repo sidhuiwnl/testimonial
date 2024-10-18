@@ -1,6 +1,6 @@
 "use client";
 
-import { getReviews } from "@/server/queries";
+import { getReviews, updateTweetStatus } from "@/server/queries";
 import { Avatar } from "@radix-ui/react-avatar";
 import { Button } from "./ui/button";
 import { useEffect, useState } from "react";
@@ -33,7 +33,7 @@ interface TweetInfo {
   userId: string;
   createdAt: Date;
   images: string[];
-  status: "pending" | "approved";
+  status: string
 }
 
 interface ReviewProps {
@@ -48,7 +48,7 @@ export default function Review({ userId, setTweetCount }: ReviewProps) {
     const fetchData = async () => {
       const data = await getReviews(userId);
       setTweetsInfos(
-        data?.tweetsText.map((tweet) => ({ ...tweet, status: "pending" }))
+        data?.tweetsText
       );
 
       setTweetCount(data?.tweetsText.length || 0);
@@ -56,12 +56,13 @@ export default function Review({ userId, setTweetCount }: ReviewProps) {
     if (userId) fetchData();
   }, [userId, setTweetCount]);
 
-  function handleApprovalChange(id: string, status: "approved") {
+  async function handleApprovalChange(id: string, status: "approved") {
     setTweetsInfos((prevTweets) =>
       prevTweets?.map((tweet) =>
         tweet.id === id ? { ...tweet, status: status } : tweet
       )
     );
+    await updateTweetStatus(id,status);
   }
 
   return (
