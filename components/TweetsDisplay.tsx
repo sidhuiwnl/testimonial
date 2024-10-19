@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { getReviews, updateTweetStatus } from "@/server/queries";
+import { deleteReview, getReviews, updateTweetStatus } from "@/server/queries";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
@@ -157,6 +157,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
                 onApprove={() =>
                   handleApprovalChange(tweetsInfo.id, "approved")
                 }
+                onDelete={() => deleteReview(tweetsInfo.id)}
               />
               <div className="bg-zinc-500/10 h-10 px-4 py-2 border rounded-md font-medium text-xs">
                 {tweetsInfo.status === "approved"
@@ -172,7 +173,13 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   );
 }
 
-function DropDownMenus({ onApprove }: { onApprove: () => void }) {
+function DropDownMenus({
+  onApprove,
+  onDelete,
+}: {
+  onApprove: () => void;
+  onDelete: () => void;
+}) {
   return (
     <DropdownMenu>
       <DropdownMenuTrigger>
@@ -199,7 +206,7 @@ function DropDownMenus({ onApprove }: { onApprove: () => void }) {
           Reject
         </DropdownMenuItem>
         <DropdownMenuSeparator />
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={onDelete}>
           <Trash2Icon className="mr-2" />
           Delete
         </DropdownMenuItem>

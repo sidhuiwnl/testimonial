@@ -55,6 +55,15 @@ export async function updateTweetStatus(id : string,status : string){
   })
 }
 
+export async function deleteReview(id : string){
+ 
+  return await client.tweetReview.delete({
+    where : {
+      id : id
+    }
+  })
+}
+
 export async function getReviews(userId: string | undefined) {
   const { user } = await validateRequest();
   if (!user) {
