@@ -48,8 +48,7 @@ interface ReviewProps {
 
 function TweetModal({ tweet }: { tweet: TweetInfo }) {
   return (
-    <DialogContent className="sm:max-w-[425px]">
-     
+    <DialogContent className="sm:max-w-[425px] bg-black border-none">
       <div className="mt-4">
         <div className="flex items-center space-x-4">
           <Avatar>
@@ -57,11 +56,11 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
             <AvatarFallback>{tweet.username[0]}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-bold">{tweet.username}</p>
+            <p className="font-bold text-white">{tweet.username}</p>
             <p className="text-gray-500">@{tweet.handle}</p>
           </div>
         </div>
-        <p className="mt-4">{tweet.tweetContent}</p>
+        <p className="mt-4 text-white">{tweet.tweetContent}</p>
         {tweet.images.map((image, index) => (
           <Image
             key={index}
@@ -72,11 +71,19 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
             className="mt-4 rounded-lg object-contain"
           />
         ))}
-        <Badge className="mt-4 mr-2 bg-white text-black font-medium hover:bg-white"> <p>
-          {format(new Date(tweet.createdAt), "MMM d, yyyy")}
-        </p></Badge>
-       <Badge className="mt-2 bg-white text-black hover:bg-teal-700 hover:text-white font-medium"><p>Status: {tweet.status}</p></Badge>
-        
+        <Badge className="mt-4 mr-2 bg-white text-black font-medium hover:bg-white">
+          {" "}
+          <p>{format(new Date(tweet.createdAt), "MMM d, yyyy")}</p>
+        </Badge>
+        {tweet.status === "approved" ? (
+          <Badge className="mt-2 bg-teal-700 text-white hover:bg-teal-700 hover:text-white font-medium">
+            <p>Status: {tweet.status}</p>
+          </Badge>
+        ) : (
+          <Badge className="mt-2 bg-white text-black hover:bg-white hover:text-black font-medium">
+            <p>Status: {tweet.status}</p>
+          </Badge>
+        )}
       </div>
     </DialogContent>
   );
@@ -125,7 +132,6 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
             </div>
 
             <div className="flex flex-col w-6/12 space-y-3">
-              
               <Dialog>
                 <DialogTrigger asChild>
                   <div>
@@ -146,7 +152,6 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
               </Dialog>
             </div>
 
-            
             <div className="flex w-3/12 flex-col justify-end items-end space-y-2">
               <DropDownMenus
                 onApprove={() =>
