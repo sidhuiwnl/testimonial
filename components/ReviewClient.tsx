@@ -11,7 +11,7 @@ export default function ReviewClient({ userId }: ReviewClientProps) {
   const [tweetCount, setTweetCount] = useState(0);
 
   return (
-    <div className=" space-y-3">
+    <div className="space-y-3">
       <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-800">
         My reviews <span className="text-black">({tweetCount})</span>
       </h1>
