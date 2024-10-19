@@ -1,4 +1,4 @@
-"use client";
+
 
 interface ReviewProps {
   userId: string | undefined;

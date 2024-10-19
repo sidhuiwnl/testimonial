@@ -19,13 +19,7 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { format } from "date-fns";
 import { Badge } from "./ui/badge";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
+import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
 
 interface TweetInfo {
@@ -157,7 +151,11 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
                 onApprove={() =>
                   handleApprovalChange(tweetsInfo.id, "approved")
                 }
-                onDelete={() => deleteReview(tweetsInfo.id)}
+                onDelete={async () => {
+                  const updateTweet = await deleteReview(tweetsInfo.id);
+                  setTweetsInfos(updateTweet);
+                  setTweetCount(updateTweet.length);
+                }}
               />
               <div className="bg-zinc-500/10 h-10 px-4 py-2 border rounded-md font-medium text-xs">
                 {tweetsInfo.status === "approved"
