@@ -17,8 +17,9 @@ export default function Login() {
           onClick={async () => {
             await signIn.social({
               provider: "github",
-              callbackURL: "http://localhost:3000 ",
+              callbackURL : "/"
             });
+        
           }}
         >
           <GitHubLogoIcon className="w-5 h-5" />
