@@ -140,7 +140,12 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
                         className="rounded-lg object-contain max-h-64 w-[200px]"
                       />
                     ))}
+                     <Badge className="mt-2">
+                      {" "}
+                      <p>{format(new Date(tweetsInfo.createdAt), "MMM d, yyyy")}</p>
+                      </Badge>
                   </div>
+                 
                 </DialogTrigger>
                 <TweetModal tweet={tweetsInfo} />
               </Dialog>
