@@ -19,6 +19,7 @@ export default function Login() {
               provider: "github",
               callbackURL : "/"
             });
+        
           }}
         >
           <GitHubLogoIcon className="w-5 h-5" />
