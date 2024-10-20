@@ -17,7 +17,7 @@ export default function Login() {
           onClick={async () => {
             await signIn.social({
               provider: "github",
-              callbackURL: "/",
+              callbackURL: "http://localhost:3000 ",
             });
           }}
         >
