@@ -17,7 +17,7 @@ export default function Login() {
           onClick={async () => {
             await signIn.social({
               provider: "github",
-              callbackURL: "https://testimonial-git-sidharth-sidhuiwnls-projects.vercel.app/",
+              callbackURL: "/",
             });
           }}
         >
