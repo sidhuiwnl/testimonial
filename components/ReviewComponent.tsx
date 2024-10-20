@@ -1,5 +1,3 @@
-
-
 interface ReviewProps {
   userId: string | undefined;
   setTweetCount: (count: number) => void;

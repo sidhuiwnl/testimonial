@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import Review from "@/components/ReviewComponent";
+import { useSession } from "@/app/lib/auth-client";
 
-interface ReviewClientProps {
-  userId: string | undefined;
-}
 
-export default function ReviewClient({ userId }: ReviewClientProps) {
+
+export default function ReviewClient() {
+  const session = useSession();
+  const userId  = session.data?.user.id
+  
   const [tweetCount, setTweetCount] = useState(0);
 
   return (

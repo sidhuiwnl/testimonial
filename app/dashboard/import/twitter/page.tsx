@@ -12,7 +12,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import Image from "next/image";
 import { XIcon } from "lucide-react";
 import { Trash2 } from "lucide-react";
-
+import { useSession } from "@/app/lib/auth-client";
 import { addTweet } from "@/server/queries";
 
 export default function TwitterInt() {
@@ -20,6 +20,9 @@ export default function TwitterInt() {
 }
 
 function TwitterForm() {
+  const session = useSession();
+  const user = session.data?.user;
+
   const [tweetUrl, setTweetUrl] = useState("");
   const [username, setUsername] = useState("");
   const [handle, setHandle] = useState("");
@@ -52,19 +55,20 @@ function TwitterForm() {
   }
 
   async function addData() {
-    try {
-       await addTweet({
-        username,
-        handle,
-        tweetContent,
-        isVerified,
-        userImage: userImage ?? "",
-        mediaFiles : mediaFiles ?? []
-      });
-  
-     
-    } catch (error) {
-      console.error("Error adding tweet or uploading images:", error);
+    if (user) {
+      try {
+        await addTweet({
+          user,
+          username,
+          handle,
+          tweetContent,
+          isVerified,
+          userImage: userImage ?? "",
+          mediaFiles: mediaFiles ?? [],
+        });
+      } catch (error) {
+        console.error("Error adding tweet or uploading images:", error);
+      }
     }
   }
 
@@ -92,7 +96,7 @@ function TwitterForm() {
     setMediaFiles(null);
   }
 
-  console.log(tweet)
+  console.log(tweet);
 
   return (
     <div className="w-[1100px] space-y-5">

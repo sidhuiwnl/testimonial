@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import { Roboto } from "next/font/google";
+import { Roboto } from '@next/font/google'
 
 export const metadata: Metadata = {
   title: "Collect the reviews",

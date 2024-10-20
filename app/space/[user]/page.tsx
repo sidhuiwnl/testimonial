@@ -1,7 +1,12 @@
+"use client"
+
+import { useSession } from "@/app/lib/auth-client"
+
 export default function UserSpace(){
+  const session = useSession();
   return(
     <div>
-      <h1>adadad</h1>
+     {session.data?.user.email}
     </div>
   )
 }
