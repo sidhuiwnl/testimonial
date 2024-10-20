@@ -1,26 +1,14 @@
-import { lucia, validateRequest } from "@/lib/auth";
-import { redirect } from "next/navigation";
-import { cookies } from "next/headers";
+import { signOut } from "@/app/lib/auth-client";
 
-export default async function SignOut() {
-	return (
-		<form action={logout}>
-			<button>Sign out</button>
-		</form>
-	);
+
+export default function SignOut() {
+  return (
+    <button
+      onClick={async () => {
+        await signOut();
+      }}
+    >
+      <span>LogOut</span>
+    </button>
+  );
 }
-
-async function logout() : Promise<void> {
-	"use server";
-	const { session } = await validateRequest();
-	if (!session) {
-		return;
-	}
-
-	await lucia.invalidateSession(session.id);
-
-	const sessionCookie = lucia.createBlankSessionCookie();
-	cookies().set(sessionCookie.name, sessionCookie.value, sessionCookie.attributes);
-	return redirect("/login");
-}
-

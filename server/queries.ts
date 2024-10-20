@@ -1,10 +1,13 @@
 "use server";
 
-import { client } from "@/lib/prisma";
-import { validateRequest } from "@/lib/auth";
+import { client } from "@/app/lib/prisma";
+
 import { redirect } from "next/navigation";
+import { useSession } from "@/app/lib/auth-client";
+import { User } from "better-auth";
 
 export async function addTweet({
+  user,
   username,
   handle,
   tweetContent,
@@ -12,6 +15,7 @@ export async function addTweet({
   userImage,
   mediaFiles,
 }: {
+  user: User;
   username: string;
   handle: string;
   tweetContent: string;
@@ -19,8 +23,6 @@ export async function addTweet({
   userImage: string;
   mediaFiles: string[];
 }) {
-  const { user } = await validateRequest();
-
   if (!user) {
     console.error("Unauthorized");
   } else {
@@ -31,7 +33,7 @@ export async function addTweet({
         handle: handle,
         tweetContent: tweetContent,
         verified: isVerified,
-        userId: user?.id,
+        userId: user.id,
         id: JSON.stringify(Math.floor(Math.random() * 100000)),
         createdAt: new Date(),
         images: mediaFiles,
@@ -54,8 +56,7 @@ export async function updateTweetStatus(id: string, status: string) {
 }
 
 export async function deleteReview(id: string) {
-  const { user } = await validateRequest();
-
+  const session = useSession();
   await client.tweetReview.delete({
     where: {
       id: id,
@@ -64,7 +65,7 @@ export async function deleteReview(id: string) {
 
   const updatedTweetInfo = await client.tweetReview.findMany({
     where: {
-      userId: user?.id,
+      userId: session.data?.user.id,
     },
   });
 
@@ -76,8 +77,7 @@ export async function deleteReview(id: string) {
 }
 
 export async function getReviews(userId: string | undefined) {
-  const { user } = await validateRequest();
-  if (!user) {
+  if (!userId) {
     console.error("Unauthoerized");
   } else {
     const tweetsText = await client.tweetReview.findMany({

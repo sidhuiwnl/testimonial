@@ -1,3 +1,5 @@
+"use client"
+
 import {
   Calendar,
   ChevronUp,
@@ -7,7 +9,7 @@ import {
   Settings,
   BeerIcon,
 } from "lucide-react";
-import Image from "next/image";
+import { useSession } from "@/app/lib/auth-client";
 import Link from "next/link";
 import {
   Sidebar,
@@ -26,8 +28,8 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./dropdown-menu";
-import { validateRequest } from "@/lib/auth";
-import SignOut from "../Signout";
+import Image from "next/image";
+import SignOut from "../SignOut";
 
 
 const items = [
@@ -58,8 +60,9 @@ const items = [
   },
 ];
 
-export async function AppSidebar() {
-  const { user } = await validateRequest();
+export function AppSidebar() {
+  const session = useSession();
+  const user = session.data?.user
   return (
     <Sidebar>
       <SidebarContent>
@@ -91,13 +94,13 @@ export async function AppSidebar() {
               <DropdownMenuTrigger asChild>
                 <SidebarMenuButton>
                   <Image
-                    src={user?.avatar_url ?? ""}
+                    src={user?.image || ""}
                     width={30}
                     height={30}
-                    alt={user?.username ?? ""}
+                    alt={user?.name || ""}
                     className="rounded-full "
                   />
-                  {user?.username}
+                  {user?.name}
                   <ChevronUp className="ml-auto" />
                 </SidebarMenuButton>
               </DropdownMenuTrigger>
@@ -112,7 +115,7 @@ export async function AppSidebar() {
                   <span>Billing</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                    <SignOut/>
+                  <SignOut/>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
