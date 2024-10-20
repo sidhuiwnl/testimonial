@@ -1,7 +1,7 @@
 import BreadcrumbComp from "@/components/Crumbs";
-import { validateRequest } from "@/lib/auth";
 
-import { SidebarProvider, SidebarTrigger } from "@/components/ui/sidebar";
+
+import { SidebarProvider} from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 
 export default async function DashboardLayout({
@@ -9,7 +9,7 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const { user } = await validateRequest();
+  
   return (
     <div className="flex w-full h-screen">
       <SidebarProvider>
