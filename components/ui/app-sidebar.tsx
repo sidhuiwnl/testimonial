@@ -29,7 +29,7 @@ import {
   DropdownMenuTrigger,
 } from "./dropdown-menu";
 import Image from "next/image";
-import SignOut from "../SignOut";
+import SignOut from "../Signout";
 
 
 const items = [
