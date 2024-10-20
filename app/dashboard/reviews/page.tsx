@@ -8,6 +8,9 @@ export default async function Reviews() {
 
   
   return (
-    <ReviewClient userId={user?.id} />
+    <ReviewClient 
+    userId={user?.id}
+    
+     />
   );
 }

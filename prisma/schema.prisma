@@ -43,7 +43,7 @@ model TweetReview{
   user      User  @relation(references: [id],fields: [userId], onDelete: Cascade)
   createdAt  DateTime
   images    String[]
-  
+  status    String  @default("pending")
 
 }
 

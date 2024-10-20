@@ -38,10 +38,41 @@ export async function addTweet({
       },
     });
 
-    
-    redirect("/dashboard/reviews")
+    redirect("/dashboard/reviews");
   }
- 
+}
+
+export async function updateTweetStatus(id: string, status: string) {
+  return await client.tweetReview.update({
+    where: {
+      id: id,
+    },
+    data: {
+      status: status,
+    },
+  });
+}
+
+export async function deleteReview(id: string) {
+  const { user } = await validateRequest();
+
+  await client.tweetReview.delete({
+    where: {
+      id: id,
+    },
+  });
+
+  const updatedTweetInfo = await client.tweetReview.findMany({
+    where: {
+      userId: user?.id,
+    },
+  });
+
+  if (updatedTweetInfo) {
+    return updatedTweetInfo;
+  } else {
+    return [];
+  }
 }
 
 export async function getReviews(userId: string | undefined) {
