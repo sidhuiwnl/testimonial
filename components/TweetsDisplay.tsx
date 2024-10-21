@@ -21,6 +21,7 @@ import { format } from "date-fns";
 import { Badge } from "./ui/badge";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
+import { useSession } from "@/app/lib/auth-client";
 
 interface TweetInfo {
   profile: string;
@@ -39,8 +40,6 @@ interface ReviewProps {
   userId: string | undefined;
   setTweetCount: (count: number) => void;
 }
-
-
 
 function TweetModal({ tweet }: { tweet: TweetInfo }) {
   return (
@@ -87,6 +86,7 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
 
 export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[]>([]);
+  const session = useSession();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -132,16 +132,19 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
                 <DialogTrigger asChild>
                   <div>
                     <p className="text-start">{tweetsInfo.tweetContent}</p>
-                    {tweetsInfo.images.slice(0, 1).map((image) => (
-                      <Image
-                        key={tweetsInfo.id}
-                        src={image}
-                        alt="Tweet Media"
-                        width={200}
-                        height={200}
-                        className="rounded-lg object-contain max-h-64 w-[200px]"
-                      />
-                    ))}
+                    <div className="grid grid-cols-3 space-x-2">
+                      {tweetsInfo.images.map((image) => (
+                        <Image
+                          key={tweetsInfo.id}
+                          src={image}
+                          alt="Tweet Media"
+                          width={200}
+                          height={200}
+                          className="rounded-lg object-contain max-h-50 w-[200px] "
+                        />
+                      ))}
+                    </div>
+
                     <Badge className="mt-2">
                       {" "}
                       <p>
@@ -160,7 +163,10 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
                   handleApprovalChange(tweetsInfo.id, "approved")
                 }
                 onDelete={async () => {
-                  const updateTweet = await deleteReview(tweetsInfo.id);
+                  const updateTweet = await deleteReview(
+                    tweetsInfo.id,
+                    session.data?.user.id
+                  );
                   setTweetsInfos(updateTweet);
                   setTweetCount(updateTweet.length);
                 }}
