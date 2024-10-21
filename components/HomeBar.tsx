@@ -1,6 +1,9 @@
+"use client"
+
 import Link from "next/link";
 import { Button } from "./ui/button";
 import { ChevronRight } from "lucide-react";
+import SignOut from "./Signout";
 
 export default function HomeBar(){
     return(
@@ -9,7 +12,7 @@ export default function HomeBar(){
                 Testimonial
             </div>
             <div className="space-x-3">
-                <Link href={"/"} className="text-sm">Sign out</Link>
+                <SignOut/>
                 <Link href={"/dashboard/reviews"}>
                 
                 <Button 
