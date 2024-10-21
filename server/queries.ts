@@ -3,7 +3,7 @@
 import { client } from "@/app/lib/prisma";
 
 import { redirect } from "next/navigation";
-import { useSession } from "@/app/lib/auth-client";
+
 import { User } from "better-auth";
 
 export async function addTweet({
@@ -55,17 +55,19 @@ export async function updateTweetStatus(id: string, status: string) {
   });
 }
 
-export async function deleteReview(id: string) {
-  const session = useSession();
+export async function deleteReview(id: string,userId : string | undefined) {
+ 
   await client.tweetReview.delete({
     where: {
       id: id,
     },
   });
 
+  
+
   const updatedTweetInfo = await client.tweetReview.findMany({
     where: {
-      userId: session.data?.user.id,
+      userId: userId,
     },
   });
 
