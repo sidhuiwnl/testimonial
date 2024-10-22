@@ -22,6 +22,7 @@ import { Badge } from "./ui/badge";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
 import { useSession } from "@/app/lib/auth-client";
+import TweetsDisplaySkeleton from "./TweetDisplaySkeleton";
 
 interface TweetInfo {
   profile: string;
@@ -86,14 +87,22 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
 
 export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
   const session = useSession();
 
   useEffect(() => {
     const fetchData = async () => {
       if (userId) {
-        const data = await getReviews(userId);
-        setTweetsInfos(data?.tweetsText || []);
-        setTweetCount(data?.tweetsText.length || 0);
+        setIsLoading(true);
+        try {
+          const data = await getReviews(userId);
+          setTweetsInfos(data?.tweetsText || []);
+          setTweetCount(data?.tweetsText.length || 0);
+        } catch (error) {
+          console.error("Error fetching reviews:", error);
+        } finally {
+          setIsLoading(false);
+        }
       }
     };
     fetchData();
@@ -106,6 +115,10 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
       )
     );
     await updateTweetStatus(id, status);
+  }
+
+  if (isLoading) {
+    return <TweetsDisplaySkeleton />;
   }
 
   return (
