@@ -21,7 +21,7 @@ import { format } from "date-fns";
 import { Badge } from "./ui/badge";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
-import { useSession } from "@/app/lib/auth-client";
+
 import TweetsDisplaySkeleton from "./TweetDisplaySkeleton";
 
 interface TweetInfo {
@@ -88,7 +88,7 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
 export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  const session = useSession();
+  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,7 +118,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   }
 
   if (isLoading) {
-    return <TweetsDisplaySkeleton />;
+    return <TweetsDisplaySkeleton  />;
   }
 
   return (
@@ -178,7 +178,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
                 onDelete={async () => {
                   const updateTweet = await deleteReview(
                     tweetsInfo.id,
-                    session.data?.user.id
+                    userId
                   );
                   setTweetsInfos(updateTweet);
                   setTweetCount(updateTweet.length);
