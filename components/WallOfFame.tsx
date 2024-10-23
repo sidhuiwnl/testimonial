@@ -5,6 +5,7 @@ import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
 
 import { getReviews } from "@/server/queries";
 import { useSession } from "@/app/lib/auth-client";
+import WallOfSkeletonComp from "./skeletons/WallOffameSkeleton";
 
 interface TweetInfo {
   profile: string;
@@ -23,16 +24,29 @@ export function LayoutGridDemo() {
   const session = useSession();
   const userId = session.data?.user.id;
   const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[] | undefined>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchData = async () => {
-      const data = await getReviews(userId);
-      setTweetsInfos(data?.tweetsText);
+      if (userId) {
+        setIsLoading(true);
+        try {
+          const data = await getReviews(userId);
+          setTweetsInfos(data?.tweetsText);
+        } catch (error) {
+          console.error("Error fetching reviews:", error);
+        } finally {
+          setIsLoading(false);
+        }
+      }
     };
-    if (userId) {
-      fetchData();
-    }
+
+    fetchData();
   }, [userId]);
+
+  if (isLoading) {
+    return <WallOfSkeletonComp />;
+  }
 
   return (
     <div className="h-screen">

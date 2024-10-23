@@ -22,7 +22,7 @@ import { Badge } from "./ui/badge";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
 
-import TweetsDisplaySkeleton from "./TweetDisplaySkeleton";
+import TweetsDisplaySkeleton from "./skeletons/TweetDisplaySkeleton";
 
 interface TweetInfo {
   profile: string;
