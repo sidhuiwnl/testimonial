@@ -45,7 +45,7 @@ const items = [
   },
   {
     title: "Wall of Fame",
-    url: "#",
+    url: "/dashboard/walloffame",
     icon: Calendar,
   },
   {
