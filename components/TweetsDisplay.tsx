@@ -88,7 +88,6 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
 export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
-  
 
   useEffect(() => {
     const fetchData = async () => {
@@ -118,16 +117,16 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   }
 
   if (isLoading) {
-    return <TweetsDisplaySkeleton  />;
+    return <TweetsDisplaySkeleton />;
   }
 
   return (
-    <div className="space-y-2 w-[1200px]">
+    <div className="space-y-4 w-[1200px]">
       <hr className="mt-5" />
       {tweetsInfos.map((tweetsInfo) => (
         <div key={tweetsInfo.id}>
-          <div className="flex justify-around hover:bg-zinc-100 transition-colors duration-500 ease-in-out rounded-xl w-full items-center space-x-4 p-4 cursor-pointer">
-            <div className="flex flex-col w-1/12 space-y-2 items-start">
+          <div className="flex justify-around hover:bg-zinc-100 transition-colors  duration-500 ease-in-out rounded-xl w-full items-center space-x-4 p-4 cursor-pointer">
+            <div className="flex flex-col w-1/12  items-start">
               <AnimatedTooltip
                 items={[
                   {
@@ -140,10 +139,10 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
               />
             </div>
 
-            <div className="flex flex-col w-6/12 space-y-3">
+            <div className="flex flex-col w-6/12">
               <Dialog>
                 <DialogTrigger asChild>
-                  <div>
+                  <div className="space-y-5">
                     <p className="text-start">{tweetsInfo.tweetContent}</p>
                     <div className="grid grid-cols-3 space-x-2">
                       {tweetsInfo.images.map((image) => (
@@ -176,10 +175,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
                   handleApprovalChange(tweetsInfo.id, "approved")
                 }
                 onDelete={async () => {
-                  const updateTweet = await deleteReview(
-                    tweetsInfo.id,
-                    userId
-                  );
+                  const updateTweet = await deleteReview(tweetsInfo.id, userId);
                   setTweetsInfos(updateTweet);
                   setTweetCount(updateTweet.length);
                 }}

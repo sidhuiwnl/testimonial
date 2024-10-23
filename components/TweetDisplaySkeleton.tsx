@@ -1,8 +1,10 @@
+
+
 import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const TweetsDisplaySkeleton = () => {
-  const skeletonItems = Array(3).fill(null);
+  const skeletonItems = Array(4).fill(null);
 
   return (
     <div className="space-y-2 w-[1200px]">
