@@ -1,10 +1,48 @@
-import { LayoutGridDemo } from "@/components/WallOfFame"
+"use client";
 
-export default function WallOfFame(){
-    return(
-        <div>
-           <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-800">Fame Wall.</h1>
-           <LayoutGridDemo/>
-        </div>
-    )
+import { LayoutGridDemo } from "@/components/WallOfFame";
+import { Eye, Code } from "lucide-react";
+import { useState } from "react";
+
+export default function WallOfFame() {
+  return (
+    <div>
+      <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-800">
+        Fame Wall.
+      </h1>
+      <ToggleButton />
+
+      <LayoutGridDemo />
+    </div>
+  );
 }
+
+const ToggleButton = () => {
+  const [activeButton, setActiveButton] = useState("preview");
+
+  return (
+    <div className="relative flex flex-row justify-around items-center bg-gray-100 w-[200px] h-[40px] mt-4 rounded-xl">
+      <div
+        className={`absolute top-0 left-0 w-[100px] h-full bg-white  rounded-xl transition-transform duration-300 ${
+          activeButton === "code" ? "translate-x-full" : ""
+        }`}
+      ></div>
+
+      <button
+        onClick={() => setActiveButton("preview")}
+        className="flex items-center font-medium text-gray-700 z-10 hover:text-black transition-colors"
+      >
+        <Eye className="mr-2 w-4" />
+        Preview
+      </button>
+
+      <button
+        onClick={() => setActiveButton("code")}
+        className="flex items-center font-medium text-gray-700 z-10 hover:text-black transition-colors"
+      >
+        <Code className="mr-2 w-4" />
+        Code
+      </button>
+    </div>
+  );
+};
