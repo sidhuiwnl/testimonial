@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState,useEffect } from "react";
-import { LayoutGrid } from "@/components/ui/layout-grid";
+import React, { useState, useEffect } from "react";
+import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
+
 import { getReviews } from "@/server/queries";
 import { useSession } from "@/app/lib/auth-client";
 
@@ -28,40 +29,24 @@ export function LayoutGridDemo() {
       const data = await getReviews(userId);
       setTweetsInfos(data?.tweetsText);
     };
-
-    fetchData();
+    if (userId) {
+      fetchData();
+    }
   }, [userId]);
 
-  const tweetCard = tweetsInfos?.map((tweetsInfo) => ({
-    id: Number(tweetsInfo.id),
-    content: <TweetCardContent tweet={tweetsInfo} />,
-    className: "col-span-1",
-    thumbnail: tweetsInfo.images[0],
-  }));
-
-  if (!tweetCard) {
-    return "";
-  }
-
   return (
-    <div className="h-screen py-10 w-full  rounded-xl mt-2">
-      <LayoutGrid cards={tweetCard} />
+    <div className="h-screen">
+      <BentoGrid className="max-w-4xl mx-auto  ">
+        {tweetsInfos?.map((tweetsInfo, i) => (
+          <BentoGridItem
+            key={tweetsInfo.id}
+            title={tweetsInfo.username}
+            description={tweetsInfo.tweetContent}
+            imageUrl={tweetsInfo.images[0]}
+            className={i === 3 || i === 6 ? "md:col-span-2" : ""}
+          />
+        ))}
+      </BentoGrid>
     </div>
   );
 }
-
-const TweetCardContent = ({ tweet }: { tweet: TweetInfo }) => {
-  return (
-    <div>
-      <p className="font-bold md:text-4xl text-xl text-white">
-        {tweet.username}
-      </p>
-      <p className="font-normal text-base text-white"></p>
-      <p className="font-normal text-base my-4 max-w-lg text-neutral-200">
-        {tweet.tweetContent}
-      </p>
-    </div>
-  );
-};
-
-
