@@ -21,10 +21,10 @@ const ToggleButton = () => {
   const [activeButton, setActiveButton] = useState("preview");
 
   return (
-    <div className="relative flex flex-row justify-around items-center bg-gray-100 w-[200px] h-[40px] mt-4 rounded-xl">
+    <div className="relative flex flex-row justify-around items-center bg-gray-100 w-[200px] h-[40px] mt-4 rounded-lg   ">
       <div
-        className={`absolute top-0 left-0 w-[100px] h-full bg-white  rounded-xl transition-transform duration-300 ${
-          activeButton === "code" ? "translate-x-full" : ""
+        className={`absolute top-0 left-0 w-[100px] h-[30px] bg-white  rounded-lg transition-transform duration-300 ml-1  mt-1   ${
+          activeButton === "code" ? "translate-x-full w-[90px] ml-4" : ""
         }`}
       ></div>
 
