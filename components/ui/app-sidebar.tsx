@@ -49,15 +49,15 @@ const items = [
     icon: Calendar,
   },
   {
-    title: "Search",
+    title: "Api Key",
     url: "#",
     icon: Search,
   },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
+  // {
+  //   title: "Settings",
+  //   url: "#",
+  //   icon: Settings,
+  // },
 ];
 
 export function AppSidebar() {

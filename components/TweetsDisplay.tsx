@@ -107,7 +107,16 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
     fetchData();
   }, [userId, setTweetCount]);
 
-  async function handleApprovalChange(id: string, status: "approved") {
+  async function handleApprovalChange(id: string, status: "Approved") {
+    setTweetsInfos((prevTweets) =>
+      prevTweets.map((tweet) =>
+        tweet.id === id ? { ...tweet, status: status } : tweet
+      )
+    );
+    await updateTweetStatus(id, status);
+  }
+
+  async function handleRejectChange(id: string, status: "Rejected") {
     setTweetsInfos((prevTweets) =>
       prevTweets.map((tweet) =>
         tweet.id === id ? { ...tweet, status: status } : tweet
@@ -172,18 +181,31 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
             <div className="flex w-3/12 flex-col justify-end items-end space-y-2">
               <DropDownMenus
                 onApprove={() =>
-                  handleApprovalChange(tweetsInfo.id, "approved")
+                  handleApprovalChange(tweetsInfo.id, "Approved")
                 }
                 onDelete={async () => {
                   const updateTweet = await deleteReview(tweetsInfo.id, userId);
                   setTweetsInfos(updateTweet);
                   setTweetCount(updateTweet.length);
                 }}
+                onReject={() => {
+                  handleRejectChange(tweetsInfo.id, "Rejected");
+                }}
               />
-              <div className="bg-zinc-500/10 h-10 px-4 py-2 border rounded-md font-medium text-xs">
-                {tweetsInfo.status === "approved"
+              <div
+                className={`h-10 min-w-[120px] text-center  px-4 py-2 border rounded-md font-medium text-xs ${
+                  tweetsInfo.status === "Approved"
+                    ? "bg-green-100 text-green-800"
+                    : tweetsInfo.status === "Rejected"
+                    ? "bg-red-100 text-red-800"
+                    : "bg-zinc-500/10 text-gray-800"
+                }`}
+              >
+                {tweetsInfo.status === "Approved"
                   ? "Approved ✅"
-                  : "Approval Pending... 🏳️"}
+                  : tweetsInfo.status === "Rejected"
+                  ? "Rejected ❌"
+                  : "Approval Pending 🏳️"}
               </div>
             </div>
           </div>
@@ -197,9 +219,11 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
 function DropDownMenus({
   onApprove,
   onDelete,
+  onReject,
 }: {
   onApprove: () => void;
   onDelete: () => void;
+  onReject: () => void;
 }) {
   return (
     <DropdownMenu>
@@ -222,7 +246,7 @@ function DropDownMenus({
           <CheckCheck className="mr-2" />
           Approve
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={onReject}>
           <CircleSlash className="mr-2" />
           Reject
         </DropdownMenuItem>
