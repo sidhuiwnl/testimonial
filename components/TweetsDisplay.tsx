@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
-  SquareArrowOutUpRight,
+  ChevronLeft,
+  ChevronRight,
   ArrowRightFromLine,
   CheckCheck,
   CircleSlash,
@@ -220,28 +221,35 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
           <hr className="mt-5" />
         </div>
       ))}
-      <div className="flex justify-center items-center space-x-2 mt-4">
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
-          disabled={currentPage === 1}
-        >
-          Previous
-        </Button>
-        <span className="text-sm text-zinc-600">
-          Page {currentPage} of {totalPages}
-        </span>
-        <Button
-          variant="outline"
-          size="sm"
-          onClick={() =>
-            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
-          }
-          disabled={currentPage === totalPages}
-        >
-          Next
-        </Button>
+      <div className="flex justify-between items-center space-x-2 mt-4">
+        <div>
+          <span className="text-sm text-zinc-600">
+            Page {currentPage} of {totalPages} results
+          </span>
+        </div>
+        <div className="flex items-center ">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="h-5" />
+            Previous
+          </Button>
+          <Button className="mr-3 ml-3">{currentPage}</Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
+            Next
+            <ChevronRight className="h-5" />
+          </Button>
+        </div>
       </div>
     </div>
   );

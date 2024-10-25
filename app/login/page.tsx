@@ -25,9 +25,7 @@ export default function Login() {
           <GitHubLogoIcon className="w-5 h-5" />
           <span className="text-sm antialiased">Continue with Github</span>
         </button>
-        <Link href={"/"} className="underline  text-sm mt-2 text-zinc-500">
-          Hook
-        </Link>
+        
         <Link
           href={"https://x.com/sidharth_b26649"}
           className="text-zinc-500 text-sm absolute bottom-0"
