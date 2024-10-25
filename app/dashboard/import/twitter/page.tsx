@@ -253,7 +253,7 @@ function TwitterForm() {
       <div className="flex space-x-2 justify-end">
         <Button
           onClick={reset}
-          className="hover:bg-red-500 bg-white text-black w-30 px-4 h-11 text-center"
+          className="hover:bg-red-500 hover:text-white bg-white text-black w-30 px-4 h-10 text-center"
         >
           <Trash2 className=" w-8 h-4" />
           Reset

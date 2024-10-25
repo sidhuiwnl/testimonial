@@ -8,10 +8,10 @@ export default function SignOut() {
     <button
       onClick={async () => {
         await signOut();
-        router.push("/login"); 
+        router.push("/login");
       }}
     >
-      <span className="font-medium">Logout</span>
+      <p className="underline font-sm">Logout</p>
     </button>
   );
 }

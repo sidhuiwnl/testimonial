@@ -2,7 +2,7 @@ import React from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 
 const TweetsDisplaySkeleton = () => {
-  const skeletonItems = Array(4).fill(null);
+  const skeletonItems = Array(3).fill(null);
 
   return (
     <div className="space-y-2 w-[1200px]">
@@ -28,7 +28,7 @@ const TweetsDisplaySkeleton = () => {
             </div>
 
             <div className="flex w-3/12 flex-col justify-end items-end space-y-2">
-              <Skeleton className="h-8 w-24" />
+              <Skeleton className="h-10 w-32" />
               <Skeleton className="h-10 w-32" />
             </div>
           </div>

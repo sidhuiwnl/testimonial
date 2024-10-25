@@ -32,7 +32,10 @@ export function LayoutGridDemo() {
         setIsLoading(true);
         try {
           const data = await getReviews(userId);
-          setTweetsInfos(data?.tweetsText);
+          const filteredTweet = data?.tweetsText.filter(
+            (tweet) => tweet.status === "Approved"
+          );
+          setTweetsInfos(filteredTweet);
         } catch (error) {
           console.error("Error fetching reviews:", error);
         } finally {

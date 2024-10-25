@@ -88,6 +88,8 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
 export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const tweetPerPage = 3;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -129,10 +131,15 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
     return <TweetsDisplaySkeleton />;
   }
 
+  const totalPages = Math.ceil(tweetsInfos.length / tweetPerPage);
+  const indexofLastTweet = currentPage * tweetPerPage;
+  const indexOfFirstTweet = indexofLastTweet - tweetPerPage;
+  const currentTweets = tweetsInfos.slice(indexOfFirstTweet, indexofLastTweet);
+
   return (
     <div className="space-y-4 w-[1200px]">
       <hr className="mt-5" />
-      {tweetsInfos.map((tweetsInfo) => (
+      {currentTweets.map((tweetsInfo) => (
         <div key={tweetsInfo.id}>
           <div className="flex justify-around hover:bg-zinc-100 transition-colors  duration-500 ease-in-out rounded-xl w-full items-center space-x-4 p-4 cursor-pointer">
             <div className="flex flex-col w-1/12  items-start">
@@ -174,6 +181,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
                     </Badge>
                   </div>
                 </DialogTrigger>
+
                 <TweetModal tweet={tweetsInfo} />
               </Dialog>
             </div>
@@ -212,6 +220,29 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
           <hr className="mt-5" />
         </div>
       ))}
+      <div className="flex justify-center items-center space-x-2 mt-4">
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+        <span className="text-sm text-zinc-600">
+          Page {currentPage} of {totalPages}
+        </span>
+        <Button
+          variant="outline"
+          size="sm"
+          onClick={() =>
+            setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+          }
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </Button>
+      </div>
     </div>
   );
 }
@@ -233,10 +264,10 @@ function DropDownMenus({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[200px]">
-        <DropdownMenuItem>
+        {/* <DropdownMenuItem>
           <SquareArrowOutUpRight className="mr-2" />
           Details
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuItem>
           <ArrowRightFromLine className="mr-2" />
           Export
