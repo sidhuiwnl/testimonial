@@ -72,8 +72,12 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
           {" "}
           <p>{format(new Date(tweet.createdAt), "MMM d, yyyy")}</p>
         </Badge>
-        {tweet.status === "approved" ? (
+        {tweet.status === "Approved" ? (
           <Badge className="mt-2 bg-teal-700 text-white hover:bg-teal-700 hover:text-white font-medium">
+            <p>Status: {tweet.status}</p>
+          </Badge>
+        ) : tweet.status === "Rejected" ? (
+          <Badge className="mt-2 bg-red-700 text-white hover:bg-red-700 hover:text-white font-medium">
             <p>Status: {tweet.status}</p>
           </Badge>
         ) : (
