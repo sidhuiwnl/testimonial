@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getReviews } from '@/server/queries';
 
+
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
   const userId = searchParams.get("userId");
