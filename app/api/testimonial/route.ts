@@ -1,14 +1,19 @@
-import { NextApiRequest, NextApiResponse } from "next";
-import { getReviews } from "@/server/queries";
+import { NextResponse } from 'next/server';
+import { getReviews } from '@/server/queries';
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  const { userId } = req.query;
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const userId = searchParams.get("userId");
+
+  if (!userId) {
+    return NextResponse.json({ error: "Missing userId" }, { status: 400 });
+  }
 
   try {
-    const tweetsText = await getReviews(userId as string); // Ensure userId is a string
-    res.status(200).json(tweetsText);
+    const tweetsText = await getReviews(userId);
+    return NextResponse.json(tweetsText);
   } catch (error) {
     console.error("Error fetching reviews:", error);
-    res.status(500).json({ error: "Failed to fetch reviews" });
+    return NextResponse.json({ error: "Failed to fetch reviews" }, { status: 500 });
   }
 }
