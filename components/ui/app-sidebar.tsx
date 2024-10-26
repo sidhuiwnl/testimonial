@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import {
   Calendar,
@@ -6,7 +6,6 @@ import {
   Home,
   Inbox,
   Search,
-  Settings,
   BeerIcon,
 } from "lucide-react";
 import { useSession } from "@/app/lib/auth-client";
@@ -31,7 +30,6 @@ import {
 import Image from "next/image";
 import SignOut from "../Signout";
 
-
 const items = [
   {
     title: "Import Review",
@@ -53,12 +51,11 @@ const items = [
     url: "#",
     icon: Search,
   },
- 
 ];
 
 export function AppSidebar() {
   const session = useSession();
-  const user = session.data?.user
+  const user = session.data?.user;
   return (
     <Sidebar>
       <SidebarContent>
@@ -111,7 +108,7 @@ export function AppSidebar() {
                   <span>Billing</span>
                 </DropdownMenuItem>
                 <DropdownMenuItem>
-                  <SignOut/>
+                  <SignOut />
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>
