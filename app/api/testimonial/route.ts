@@ -1,10 +1,11 @@
+import { NextApiRequest, NextApiResponse } from "next";
 import { getReviews } from "@/server/queries";
 
-export default async function handler(req: any, res: any) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const { userId } = req.query;
 
   try {
-    const tweetsText = await getReviews(userId); // Adjusted to directly receive the array
+    const tweetsText = await getReviews(userId as string); // Ensure userId is a string
     res.status(200).json(tweetsText);
   } catch (error) {
     console.error("Error fetching reviews:", error);
