@@ -73,7 +73,7 @@ export const BentoGridItem = ({
 
         <div
           className={cn(
-            "relative flex-1 mt-3 overflow-hidden rounded-xl",
+            "relative flex-1 mt-3 overflow-hidden rounded-xl border border-neutral-200 dark:border-neutral-800",
             imageAspect === "landscape"
               ? "aspect-video"
               : imageAspect === "portrait"
@@ -83,7 +83,6 @@ export const BentoGridItem = ({
         >
           {imageUrl && !imageError ? (
             <>
-              {/* Loading skeleton */}
               {!imageLoaded && (
                 <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 animate-pulse" />
               )}
@@ -93,7 +92,7 @@ export const BentoGridItem = ({
                 alt={typeof title === "string" ? title : "Bento grid item"}
                 fill
                 className={cn(
-                  "object-cover transition-all duration-200  group-hover/bento:scale-105",
+                  "object-cover transition-all duration-200 group-hover/bento:scale-105",
                   !imageLoaded && "opacity-0",
                   imageLoaded && "opacity-100"
                 )}
@@ -109,3 +108,5 @@ export const BentoGridItem = ({
     </div>
   );
 };
+
+export default BentoGrid;
