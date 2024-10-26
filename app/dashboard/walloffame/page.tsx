@@ -17,30 +17,95 @@ export default function WallOfFame() {
   );
 }
 
+
+
 const ToggleButton = () => {
   const [activeButton, setActiveButton] = useState("preview");
 
   return (
-    <div className="relative flex flex-row justify-around items-center bg-gray-100 w-[200px] h-[40px] mt-4 rounded-xl">
+    <div className="relative flex items-center bg-zinc-100/50 backdrop-blur-sm w-[240px] h-[48px] rounded-xl p-1.5 shadow-sm border border-zinc-200 mt-4">
+      
       <div
-        className={`absolute top-0 left-0 w-[100px] h-full bg-white  rounded-xl transition-transform duration-300 ${
-          activeButton === "code" ? "translate-x-full" : ""
-        }`}
-      ></div>
+        className={`
+          absolute 
+          h-[36px] 
+          w-[110px]
+          bg-white 
+          rounded-lg
+          shadow-sm
+          border border-zinc-200
+          transition-all 
+          duration-300 
+          ease-in-out
+          ${activeButton === "code" ? "translate-x-[114px]" : "translate-x-0"}
+        `}
+      />
 
+      
       <button
         onClick={() => setActiveButton("preview")}
-        className="flex items-center font-medium text-gray-700 z-10 hover:text-black transition-colors"
+        className={`
+          relative
+          flex 
+          items-center 
+          justify-center 
+          w-[110px]
+          h-[36px]
+          rounded-lg
+          font-medium 
+          transition-colors
+          duration-300
+          ${
+            activeButton === "preview"
+              ? "text-zinc-800"
+              : "text-zinc-500 hover:text-zinc-700"
+          }
+        `}
       >
-        <Eye className="mr-2 w-4" />
+        <Eye
+          className={`
+            mr-2 
+            w-4 
+            h-4 
+            transition-transform 
+            duration-300
+            ${activeButton === "preview" ? "scale-110" : "scale-90"}
+          `}
+        />
         Preview
       </button>
 
+      
       <button
         onClick={() => setActiveButton("code")}
-        className="flex items-center font-medium text-gray-700 z-10 hover:text-black transition-colors"
+        className={`
+          relative
+          flex 
+          items-center 
+          justify-center 
+          w-[110px]
+          h-[36px]
+          rounded-lg
+          font-medium 
+          transition-colors
+          duration-300
+          ${
+            activeButton === "code"
+              ? "text-zinc-800"
+              : "text-zinc-500 hover:text-zinc-700"
+          }
+        `}
       >
-        <Code className="mr-2 w-4" />
+        <Code
+          className={`
+            mr-2 
+            w-4 
+            h-4 
+            transition-transform 
+            duration-300
+            ${activeButton === "code" ? "scale-110" : "scale-90"}
+          `}
+        />
         Code
       </button>
     </div>

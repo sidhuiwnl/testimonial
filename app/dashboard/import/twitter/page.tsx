@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
 import { Textarea } from "@/components/ui/textarea";
-import { ImagePlus } from "lucide-react";
+import { FileImage } from "lucide-react";
 import { useState } from "react";
 import { useTweet } from "react-tweet";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
@@ -113,7 +113,7 @@ function TwitterForm() {
         <div className="flex flex-row space-x-2">
           <Input
             placeholder="https://twitter.com/user/status/1234567890"
-            className="flex-grow bg-white h-10 px-3"
+            className="flex-grow bg-white h-15 px-3"
             onChange={(e) => {
               const tweetId = getTweetId(e.target.value);
               if (tweetId) {
@@ -152,7 +152,7 @@ function TwitterForm() {
                   <AvatarFallback>User</AvatarFallback>
                 </Avatar>
               ) : (
-                <ImagePlus className="w-10 h-10 mb-3 text-gray-400" />
+                <FileImage className=" mb-3 " />
               )}
               <p className="mb-2 text-sm text-gray-500">
                 <span className="font-semibold">Click to upload</span> or drag
@@ -253,7 +253,7 @@ function TwitterForm() {
       <div className="flex space-x-2 justify-end">
         <Button
           onClick={reset}
-          className="hover:bg-red-500 bg-white text-black w-30 px-4 h-11 text-center"
+          className="hover:bg-red-500 hover:text-white bg-white text-black w-30 px-4 h-10 text-center"
         >
           <Trash2 className=" w-8 h-4" />
           Reset
@@ -277,7 +277,7 @@ function NonTweetImage() {
         className="flex flex-col items-center justify-center w-full h-32 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100"
       >
         <div className="flex flex-col items-center justify-center pt-5 pb-6">
-          <ImagePlus className="w-10 h-10 mb-3 text-gray-400" />
+          <FileImage className="mb-3 " />
           <p className="mb-2 text-sm text-gray-500">
             <span className="font-semibold">Click to upload</span> or drag and
             drop
@@ -332,7 +332,7 @@ function TweetImage({
         className="w-40 h-40 flex items-center justify-center border-2 border-gray-300 border-dashed rounded-lg cursor-pointer"
       >
         <span className="text-gray-400">
-          <ImagePlus />
+          <FileImage />
         </span>
       </Label>
     </div>

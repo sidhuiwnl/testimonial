@@ -5,7 +5,7 @@ const WallOffameSkeletonComp = () => {
   const skeletonItems = Array(3).fill(null);
 
   return (
-    <div className="grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-3 max-w-7xl mx-auto">
+    <div className="grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-3 max-w-7xl mx-auto mt-4">
       {skeletonItems.map((_, index) => (
         <div
           key={index}

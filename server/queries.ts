@@ -55,19 +55,19 @@ export async function updateTweetStatus(id: string, status: string) {
   });
 }
 
-export async function deleteReview(id: string,userId : string | undefined) {
- 
+export async function deleteReview(id: string, userId: string | undefined) {
   await client.tweetReview.delete({
     where: {
       id: id,
     },
   });
 
-  
-
   const updatedTweetInfo = await client.tweetReview.findMany({
     where: {
       userId: userId,
+    },
+    orderBy: {
+      createdAt: "desc",
     },
   });
 
@@ -80,11 +80,14 @@ export async function deleteReview(id: string,userId : string | undefined) {
 
 export async function getReviews(userId: string | undefined) {
   if (!userId) {
-    console.error("Unauthoerized");
+    console.error("Unauthorized");
   } else {
     const tweetsText = await client.tweetReview.findMany({
       where: {
         userId: userId,
+      },
+      orderBy: {
+        createdAt: "desc",
       },
     });
 

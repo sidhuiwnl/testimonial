@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import {
-  SquareArrowOutUpRight,
+  ChevronLeft,
+  ChevronRight,
   ArrowRightFromLine,
   CheckCheck,
   CircleSlash,
@@ -71,8 +72,12 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
           {" "}
           <p>{format(new Date(tweet.createdAt), "MMM d, yyyy")}</p>
         </Badge>
-        {tweet.status === "approved" ? (
+        {tweet.status === "Approved" ? (
           <Badge className="mt-2 bg-teal-700 text-white hover:bg-teal-700 hover:text-white font-medium">
+            <p>Status: {tweet.status}</p>
+          </Badge>
+        ) : tweet.status === "Rejected" ? (
+          <Badge className="mt-2 bg-red-700 text-white hover:bg-red-700 hover:text-white font-medium">
             <p>Status: {tweet.status}</p>
           </Badge>
         ) : (
@@ -88,6 +93,8 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
 export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[]>([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [currentPage, setCurrentPage] = useState(1);
+  const tweetPerPage = 3;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -107,7 +114,16 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
     fetchData();
   }, [userId, setTweetCount]);
 
-  async function handleApprovalChange(id: string, status: "approved") {
+  async function handleApprovalChange(id: string, status: "Approved") {
+    setTweetsInfos((prevTweets) =>
+      prevTweets.map((tweet) =>
+        tweet.id === id ? { ...tweet, status: status } : tweet
+      )
+    );
+    await updateTweetStatus(id, status);
+  }
+
+  async function handleRejectChange(id: string, status: "Rejected") {
     setTweetsInfos((prevTweets) =>
       prevTweets.map((tweet) =>
         tweet.id === id ? { ...tweet, status: status } : tweet
@@ -120,10 +136,15 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
     return <TweetsDisplaySkeleton />;
   }
 
+  const totalPages = Math.ceil(tweetsInfos.length / tweetPerPage);
+  const indexofLastTweet = currentPage * tweetPerPage;
+  const indexOfFirstTweet = indexofLastTweet - tweetPerPage;
+  const currentTweets = tweetsInfos.slice(indexOfFirstTweet, indexofLastTweet);
+
   return (
     <div className="space-y-4 w-[1200px]">
       <hr className="mt-5" />
-      {tweetsInfos.map((tweetsInfo) => (
+      {currentTweets.map((tweetsInfo) => (
         <div key={tweetsInfo.id}>
           <div className="flex justify-around hover:bg-zinc-100 transition-colors  duration-500 ease-in-out rounded-xl w-full items-center space-x-4 p-4 cursor-pointer">
             <div className="flex flex-col w-1/12  items-start">
@@ -165,6 +186,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
                     </Badge>
                   </div>
                 </DialogTrigger>
+
                 <TweetModal tweet={tweetsInfo} />
               </Dialog>
             </div>
@@ -172,24 +194,67 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
             <div className="flex w-3/12 flex-col justify-end items-end space-y-2">
               <DropDownMenus
                 onApprove={() =>
-                  handleApprovalChange(tweetsInfo.id, "approved")
+                  handleApprovalChange(tweetsInfo.id, "Approved")
                 }
                 onDelete={async () => {
                   const updateTweet = await deleteReview(tweetsInfo.id, userId);
                   setTweetsInfos(updateTweet);
                   setTweetCount(updateTweet.length);
                 }}
+                onReject={() => {
+                  handleRejectChange(tweetsInfo.id, "Rejected");
+                }}
               />
-              <div className="bg-zinc-500/10 h-10 px-4 py-2 border rounded-md font-medium text-xs">
-                {tweetsInfo.status === "approved"
+              <div
+                className={`h-10 min-w-[120px] text-center  px-4 py-2 border rounded-md font-medium text-xs ${
+                  tweetsInfo.status === "Approved"
+                    ? "bg-green-100 text-green-800"
+                    : tweetsInfo.status === "Rejected"
+                    ? "bg-red-100 text-red-800"
+                    : "bg-zinc-500/10 text-gray-800"
+                }`}
+              >
+                {tweetsInfo.status === "Approved"
                   ? "Approved ✅"
-                  : "Approval Pending... 🏳️"}
+                  : tweetsInfo.status === "Rejected"
+                  ? "Rejected ❌"
+                  : "Approval Pending 🏳️"}
               </div>
             </div>
           </div>
           <hr className="mt-5" />
         </div>
       ))}
+      <div className="flex justify-between items-center space-x-2 mt-4">
+        <div>
+          <span className="text-sm text-zinc-600">
+            Page {currentPage} of {totalPages} results
+          </span>
+        </div>
+        <div className="flex items-center ">
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+            disabled={currentPage === 1}
+          >
+            <ChevronLeft className="h-5" />
+            Previous
+          </Button>
+          <Button className="mr-3 ml-3">{currentPage}</Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            onClick={() =>
+              setCurrentPage((prev) => Math.min(prev + 1, totalPages))
+            }
+            disabled={currentPage === totalPages}
+          >
+            Next
+            <ChevronRight className="h-5" />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 }
@@ -197,9 +262,11 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
 function DropDownMenus({
   onApprove,
   onDelete,
+  onReject,
 }: {
   onApprove: () => void;
   onDelete: () => void;
+  onReject: () => void;
 }) {
   return (
     <DropdownMenu>
@@ -209,10 +276,10 @@ function DropDownMenus({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[200px]">
-        <DropdownMenuItem>
+        {/* <DropdownMenuItem>
           <SquareArrowOutUpRight className="mr-2" />
           Details
-        </DropdownMenuItem>
+        </DropdownMenuItem> */}
         <DropdownMenuItem>
           <ArrowRightFromLine className="mr-2" />
           Export
@@ -222,7 +289,7 @@ function DropDownMenus({
           <CheckCheck className="mr-2" />
           Approve
         </DropdownMenuItem>
-        <DropdownMenuItem>
+        <DropdownMenuItem onClick={onReject}>
           <CircleSlash className="mr-2" />
           Reject
         </DropdownMenuItem>

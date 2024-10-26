@@ -39,7 +39,7 @@ const items = [
     icon: Home,
   },
   {
-    title: "My Review",
+    title: "My Reviews",
     url: "/dashboard/reviews",
     icon: Inbox,
   },
@@ -49,15 +49,15 @@ const items = [
     icon: Calendar,
   },
   {
-    title: "Search",
+    title: "Api Key",
     url: "#",
     icon: Search,
   },
-  {
-    title: "Settings",
-    url: "#",
-    icon: Settings,
-  },
+  // {
+  //   title: "Settings",
+  //   url: "#",
+  //   icon: Settings,
+  // },
 ];
 
 export function AppSidebar() {
@@ -67,9 +67,9 @@ export function AppSidebar() {
     <Sidebar>
       <SidebarContent>
         <SidebarGroup>
-          <SidebarGroupLabel className="underline text-black mt-2">
-            <BeerIcon className="mr-2" />
-            Testimonal
+          <SidebarGroupLabel className="underline text-black mt-2 mb-3">
+            <BeerIcon className="mr-2 " />
+            Testimonial
           </SidebarGroupLabel>
           <SidebarGroupContent>
             <SidebarMenu>

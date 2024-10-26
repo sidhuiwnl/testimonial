@@ -1,6 +1,7 @@
 import { cn } from "@/app/lib/utils";
 import Image from "next/image";
 import { Badge } from "./badge";
+import { useState } from "react";
 
 export const BentoGrid = ({
   className,
@@ -12,7 +13,7 @@ export const BentoGrid = ({
   return (
     <div
       className={cn(
-        "grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-3 max-w-7xl mx-auto ",
+        "grid md:auto-rows-[18rem] grid-cols-1 md:grid-cols-3 gap-3 max-w-7xl mx-auto",
         className
       )}
     >
@@ -26,39 +27,81 @@ export const BentoGridItem = ({
   title,
   description,
   imageUrl,
+  layout = "vertical", // Add layout prop with default value
 }: {
   className?: string;
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
   imageUrl?: string;
+  layout?: "vertical" | "horizontal" | "square";
 }) => {
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const [imageError, setImageError] = useState(false);
+  const [imageAspect, setImageAspect] = useState<"portrait" | "landscape" | "square">("square");
+
+  const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
+    const img = e.target as HTMLImageElement;
+    const aspectRatio = img.naturalWidth / img.naturalHeight;
+    
+    if (aspectRatio > 1.2) {
+      setImageAspect("landscape");
+    } else if (aspectRatio < 0.8) {
+      setImageAspect("portrait");
+    } else {
+      setImageAspect("square");
+    }
+    
+    setImageLoaded(true);
+  };
+
   return (
     <div
       className={cn(
-        "row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none p-4 dark:bg-black dark:border-white/[0.2] bg-white border  flex flex-col",
+        "row-span-1 rounded-xl group/bento hover:shadow-xl transition duration-200 shadow-input dark:shadow-none dark:bg-black dark:border-white/[0.2] bg-white border",
         className
       )}
     >
-      <div className="relative w-full h-[70%] overflow-hidden mb-3 hover:rounded-xl">
-        {imageUrl ? (
-          <Image
-            width={500}
-            height={500}
-            src={imageUrl}
-            alt={typeof title === "string" ? title : "Bento grid item"}
-            className="w-full h-full object-cover transition-transform duration-200 group-hover/bento:scale-105 rounded-xl "
-          />
-        ) : (
-          <div className="flex flex-1 w-full h-full min-h-[6rem] rounded-xl bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100"></div>
-        )}
-      </div>
-
-      <div className="group-hover/bento:translate-x-2 transition duration-200">
-        <div className="font-sans font-bold text-neutral-600 dark:text-neutral-200 mb-2">
-          <Badge>{title}</Badge>
+      <div className="p-4 h-full flex flex-col">
+        <div className="group-hover/bento:translate-x-2 transition duration-200">
+          <div className="font-sans font-medium text-neutral-600 text-xs dark:text-neutral-300">
+            {description}
+          </div>
+          <div className="font-sans font-bold text-neutral-600 dark:text-neutral-200 mt-2">
+            <Badge>{title}</Badge>
+          </div>
         </div>
-        <div className="font-sans font-medium text-neutral-600 text-xs dark:text-neutral-300">
-          {description}
+
+        <div 
+          className={cn(
+            "relative flex-1 mt-3 overflow-hidden rounded-xl",
+            imageAspect === "landscape" ? "aspect-video" : 
+            imageAspect === "portrait" ? "aspect-[3/4]" : 
+            "aspect-square"
+          )}
+        >
+          {imageUrl && !imageError ? (
+            <>
+              {/* Loading skeleton */}
+              {!imageLoaded && (
+                <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 animate-pulse" />
+              )}
+              
+              <Image
+                src={imageUrl}
+                alt={typeof title === "string" ? title : "Bento grid item"}
+                fill
+                className={cn(
+                  "object-cover transition-all duration-200  group-hover/bento:scale-105",
+                  !imageLoaded && "opacity-0",
+                  imageLoaded && "opacity-100"
+                )}
+                onLoad={handleImageLoad}
+                onError={() => setImageError(true)}
+              />
+            </>
+          ) : (
+            <div className="w-full h-full bg-gradient-to-br from-neutral-200 dark:from-neutral-900 dark:to-neutral-800 to-neutral-100" />
+          )}
         </div>
       </div>
     </div>

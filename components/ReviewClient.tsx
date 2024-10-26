@@ -15,7 +15,7 @@ export default function ReviewClient() {
   return (
     <div className="space-y-3">
       <h1 className="text-4xl sm:text-5xl font-semibold tracking-tight text-zinc-800">
-        My reviews <span className="text-black">({tweetCount})</span>
+        My Reviews <span className="text-black">({tweetCount})</span>
       </h1>
       <p className="font-medium mt-2 text-zinc-600 antialiased">
       Centralize your review management and selectively approve preferred feedback.

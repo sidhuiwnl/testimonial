@@ -16,7 +16,7 @@ export default function BreadcrumbComp() {
     str.charAt(0).toUpperCase() + str.slice(1);
 
   return (
-    <div className="border-b border-gray-200">
+    <div className=" border-b border-gray-200">
       <Breadcrumb className="p-6 ">
         <BreadcrumbList className="flex items-center ">
           {pathsegments.map((pathsegment, index) => {
@@ -29,7 +29,7 @@ export default function BreadcrumbComp() {
                     {capitalize(decodeURIComponent(pathsegment))}
                   </BreadcrumbLink>
                 </BreadcrumbItem>
-                {index < pathsegments.length - 1 && ( 
+                {index < pathsegments.length - 1 && (
                   <BreadcrumbSeparator className="mx-2 text-gray-500" />
                 )}
               </div>
