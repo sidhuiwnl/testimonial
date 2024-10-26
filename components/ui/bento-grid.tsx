@@ -27,22 +27,22 @@ export const BentoGridItem = ({
   title,
   description,
   imageUrl,
-  layout = "vertical", // Add layout prop with default value
 }: {
   className?: string;
   title?: string | React.ReactNode;
   description?: string | React.ReactNode;
   imageUrl?: string;
-  layout?: "vertical" | "horizontal" | "square";
 }) => {
   const [imageLoaded, setImageLoaded] = useState(false);
   const [imageError, setImageError] = useState(false);
-  const [imageAspect, setImageAspect] = useState<"portrait" | "landscape" | "square">("square");
+  const [imageAspect, setImageAspect] = useState<
+    "portrait" | "landscape" | "square"
+  >("square");
 
   const handleImageLoad = (e: React.SyntheticEvent<HTMLImageElement>) => {
     const img = e.target as HTMLImageElement;
     const aspectRatio = img.naturalWidth / img.naturalHeight;
-    
+
     if (aspectRatio > 1.2) {
       setImageAspect("landscape");
     } else if (aspectRatio < 0.8) {
@@ -50,7 +50,7 @@ export const BentoGridItem = ({
     } else {
       setImageAspect("square");
     }
-    
+
     setImageLoaded(true);
   };
 
@@ -71,12 +71,14 @@ export const BentoGridItem = ({
           </div>
         </div>
 
-        <div 
+        <div
           className={cn(
             "relative flex-1 mt-3 overflow-hidden rounded-xl",
-            imageAspect === "landscape" ? "aspect-video" : 
-            imageAspect === "portrait" ? "aspect-[3/4]" : 
-            "aspect-square"
+            imageAspect === "landscape"
+              ? "aspect-video"
+              : imageAspect === "portrait"
+              ? "aspect-[3/4]"
+              : "aspect-square"
           )}
         >
           {imageUrl && !imageError ? (
@@ -85,7 +87,7 @@ export const BentoGridItem = ({
               {!imageLoaded && (
                 <div className="absolute inset-0 bg-neutral-100 dark:bg-neutral-800 animate-pulse" />
               )}
-              
+
               <Image
                 src={imageUrl}
                 alt={typeof title === "string" ? title : "Bento grid item"}

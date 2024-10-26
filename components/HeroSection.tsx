@@ -1,5 +1,4 @@
-import { Button } from "./ui/button";
-import { ChevronRight } from "lucide-react";
+
 
 export default function HeroSection() {
   return (
@@ -22,10 +21,7 @@ export default function HeroSection() {
           pre-optimized review components. Simply copy & paste to showcase
           compelling reviews on your site.
         </p>
-        {/* <Button className="relative bg-teal-700 w-[350px] h-[50px] text-white font-medium transition-shadow duration-300 ring-offset-2 hover:ring-2 hover:ring-teal-800 hover:bg-teal-800 overflow-hidden">
-          Start for free today
-          <ChevronRight />
-        </Button> */}
+        
       </div>
     </div>
   );
