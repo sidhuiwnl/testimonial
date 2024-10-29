@@ -20,7 +20,13 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { format } from "date-fns";
 import { Badge } from "./ui/badge";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
 
 import TweetsDisplaySkeleton from "./skeletons/TweetDisplaySkeleton";
@@ -53,8 +59,12 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
             <AvatarFallback>{tweet.username[0]}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-bold text-white">{tweet.username}</p>
-            <p className="text-gray-500">@{tweet.handle}</p>
+            <DialogTitle className="font-bold text-white">
+              {tweet.username}
+            </DialogTitle>
+            <DialogDescription className="text-gray-500">
+              @{tweet.handle}
+            </DialogDescription>
           </div>
         </div>
         <p className="mt-4 text-white">{tweet.tweetContent}</p>
@@ -68,8 +78,7 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
             className="mt-4 rounded-lg object-contain"
           />
         ))}
-        <Badge className="mt-4 mr-2 bg-white text-black font-medium hover:bg-white">
-          {" "}
+        <Badge className="mt-4 mr-2 bg-white text-black font-medium hover:bg-white ">
           <p>{format(new Date(tweet.createdAt), "MMM d, yyyy")}</p>
         </Badge>
         {tweet.status === "Approved" ? (
@@ -276,10 +285,6 @@ function DropDownMenus({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[200px]">
-        {/* <DropdownMenuItem>
-          <SquareArrowOutUpRight className="mr-2" />
-          Details
-        </DropdownMenuItem> */}
         <DropdownMenuItem>
           <ArrowRightFromLine className="mr-2" />
           Export
