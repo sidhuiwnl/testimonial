@@ -59,7 +59,7 @@ export function LayoutGridDemo() {
 
   return (
     <div className="h-screen">
-      <BentoGrid className="max-w-4xl mx-auto  ">
+      <BentoGrid className="max-w-4xl mx-auto  mt-7">
         {tweetsInfos?.map((tweetsInfo, i) => (
           <BentoGridItem
             key={tweetsInfo.id}

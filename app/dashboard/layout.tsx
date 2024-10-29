@@ -1,7 +1,6 @@
 import BreadcrumbComp from "@/components/Crumbs";
 
-
-import { SidebarProvider} from "@/components/ui/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 
 export default async function DashboardLayout({
@@ -9,7 +8,6 @@ export default async function DashboardLayout({
 }: {
   children: React.ReactNode;
 }) {
-  
   return (
     <div className="flex w-full h-screen">
       <SidebarProvider>
