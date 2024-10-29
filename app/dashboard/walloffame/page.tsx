@@ -1,5 +1,6 @@
 "use client";
 
+import { Suspense } from "react";
 import { LayoutGridDemo } from "@/components/WallOfFame";
 import { Eye, Code } from "lucide-react";
 import { useState } from "react";
@@ -11,7 +12,7 @@ export default function WallOfFame() {
         Fame Wall.
       </h1>
       <ToggleButton />
-
+      
       <LayoutGridDemo />
     </div>
   );

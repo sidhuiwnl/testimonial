@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
 
 import { getReviews } from "@/server/queries";
@@ -23,33 +23,39 @@ interface TweetInfo {
 export function LayoutGridDemo() {
   const session = useSession();
   const userId = session.data?.user.id;
-  const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[] | undefined>([]);
+  const [tweetsInfos, setTweetsInfos] = useState<TweetInfo[]>();
+  const [error, setError] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
-  useEffect(() => {
-    const fetchData = async () => {
-      if (userId) {
-        setIsLoading(true);
-        try {
-          const data = await getReviews(userId);
-          const filteredTweet = data?.tweetsText.filter(
-            (tweet) => tweet.status === "Approved"
-          );
-          setTweetsInfos(filteredTweet);
-        } catch (error) {
-          console.error("Error fetching reviews:", error);
-        } finally {
-          setIsLoading(false);
-        }
+  const fetchData = async () => {
+    if (userId) {
+      setIsLoading(true);
+      try {
+        setError(null);
+        const data = await getReviews(userId);
+        const filteredTweet = data?.tweetsText.filter(
+          (tweet) => tweet.status === "Approved"
+        );
+        setTweetsInfos(filteredTweet);
+      } catch (error) {
+        console.error("Error fetching reviews:", error);
+        setError("Failed to load reviews.");
+      } finally {
+        setIsLoading(false);
       }
-    };
+    } else {
+      return;
+    }
+  };
 
+  useEffect(() => {
     fetchData();
   }, [userId]);
 
-  if (isLoading) {
-    return <WallOfSkeletonComp />;
+  if(isLoading){
+    return <WallOfSkeletonComp/>
   }
+  if (error) return <p>{error}</p>;
 
   return (
     <div className="h-screen">
