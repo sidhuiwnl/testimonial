@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect, Suspense } from "react";
+import React, { useState, useEffect } from "react";
 import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
 
 import { getReviews } from "@/server/queries";

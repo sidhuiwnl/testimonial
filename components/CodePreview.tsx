@@ -41,7 +41,7 @@ export default function CodePreview() {
         code={code.trim()}
         language="jsx"
       >
-        {({ className, style, tokens, getLineProps, getTokenProps }) => (
+        {({ className, tokens, getLineProps, getTokenProps }) => (
           <pre
             className={`${className} code-preview`}
             style={{ padding: "20px" }}
