@@ -28,7 +28,7 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
-
+import NoReviewMessage from "./NoReviewMessage";
 import TweetsDisplaySkeleton from "./skeletons/TweetDisplaySkeleton";
 
 interface TweetInfo {
@@ -145,6 +145,10 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
     return <TweetsDisplaySkeleton />;
   }
 
+  if(tweetsInfos.length === 0){
+    return <NoReviewMessage/>
+  }
+
   const totalPages = Math.ceil(tweetsInfos.length / tweetPerPage);
   const indexofLastTweet = currentPage * tweetPerPage;
   const indexOfFirstTweet = indexofLastTweet - tweetPerPage;
@@ -153,6 +157,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   return (
     <div className="space-y-4 w-[1200px]">
       <hr className="mt-5" />
+      
       {currentTweets.map((tweetsInfo) => (
         <div key={tweetsInfo.id}>
           <div className="flex justify-around hover:bg-zinc-100 transition-colors  duration-500 ease-in-out rounded-xl w-full items-center space-x-4 p-4 cursor-pointer">
