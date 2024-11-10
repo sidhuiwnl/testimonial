@@ -141,7 +141,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
     await updateTweetStatus(id, status);
   }
 
-  if (isLoading) {
+  if (isLoading && tweetsInfos.length > 0) {
     return <TweetsDisplaySkeleton />;
   }
 

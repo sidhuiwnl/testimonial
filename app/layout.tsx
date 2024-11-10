@@ -10,7 +10,7 @@ export const metadata: Metadata = {
     "Collect your reviews with ease and speed, and share them with the world",
 };
 
-export const roboto_mono = Roboto_Mono({
+const roboto_mono = Roboto_Mono({
   subsets: ["latin"],
   display: "swap",
 });
