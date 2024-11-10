@@ -1,5 +1,5 @@
 import BreadcrumbComp from "@/components/Crumbs";
-
+import { Toaster } from "@/components/ui/sonner";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 
@@ -19,6 +19,7 @@ export default async function DashboardLayout({
           <div className="flex-grow p-6 overflow-auto">{children}</div>
         </div>
       </SidebarProvider>
+      <Toaster/>
     </div>
   );
 }

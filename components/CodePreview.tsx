@@ -2,21 +2,28 @@ import React from "react";
 import Highlight, { defaultProps } from "prism-react-renderer";
 import theme from "prism-react-renderer/themes/vsDark";
 import { Copy } from "lucide-react";
-const code = `
+import { toast } from "sonner";
+import { useSession } from "@/app/lib/auth-client";
+
+
+export default function CodePreview() {
+
+  const session = useSession();
+
+  const code = `
     "use client";
 
     import { WallOfLove } from "@sidharth1222/testi";
     import "@sidharth1222/testi/dist/index.css"
 
     export default function Wall() {
-        return <WallOfLove userId="6W9e2UcFx-a9y5ZaoDY_r"/>
+        return <WallOfLove userId="${session.data?.user.id}"/>
     }
 `;
 
-export default function CodePreview() {
   const handleCopy = () => {
     navigator.clipboard.writeText(code.trim());
-    alert("Code copied to clipboard!");
+    toast.success("Copied the Code")
   };
 
   return (
