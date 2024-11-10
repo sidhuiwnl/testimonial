@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import { Roboto } from '@next/font/google'
+import { Roboto_Mono } from "next/font/google";
 
 export const metadata: Metadata = {
   title: "Collect the reviews",
@@ -10,9 +10,9 @@ export const metadata: Metadata = {
     "Collect your reviews with ease and speed, and share them with the world",
 };
 
-const Rob = Roboto({
-  weight: "500",
+const roboto_mono = Roboto_Mono({
   subsets: ["latin"],
+  display: "swap",
 });
 
 export default function RootLayout({
@@ -22,7 +22,9 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${Rob.className} antialiased flex`}>{children}</body>
+      <body className={`${roboto_mono.className} antialiased flex`}>
+        {children}
+      </body>
     </html>
   );
 }

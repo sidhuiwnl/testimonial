@@ -3,6 +3,7 @@
 import { LayoutGridDemo } from "@/components/WallOfFame";
 import { Eye, Code } from "lucide-react";
 import { useState } from "react";
+import CodePreview from "@/components/CodePreview";
 
 export default function WallOfFame() {
   return (
@@ -11,20 +12,16 @@ export default function WallOfFame() {
         Fame Wall.
       </h1>
       <ToggleButton />
-
-      <LayoutGridDemo />
     </div>
   );
 }
-
-
 
 const ToggleButton = () => {
   const [activeButton, setActiveButton] = useState("preview");
 
   return (
+    <>
     <div className="relative flex items-center bg-zinc-100/50 backdrop-blur-sm w-[240px] h-[48px] rounded-xl p-1.5 shadow-sm border border-zinc-200 mt-4">
-      
       <div
         className={`
           absolute 
@@ -41,7 +38,6 @@ const ToggleButton = () => {
         `}
       />
 
-      
       <button
         onClick={() => setActiveButton("preview")}
         className={`
@@ -75,7 +71,6 @@ const ToggleButton = () => {
         Preview
       </button>
 
-      
       <button
         onClick={() => setActiveButton("code")}
         className={`
@@ -108,6 +103,9 @@ const ToggleButton = () => {
         />
         Code
       </button>
+      
     </div>
+    {activeButton === "preview" ? <LayoutGridDemo /> : <CodePreview />}
+    </>
   );
 };

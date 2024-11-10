@@ -48,7 +48,7 @@ const items = [
   },
   {
     title: "Api Key",
-    url: "#",
+    url: "/dashboard/api",
     icon: Search,
   },
 ];

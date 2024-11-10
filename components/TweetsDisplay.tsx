@@ -20,9 +20,15 @@ import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { format } from "date-fns";
 import { Badge } from "./ui/badge";
-import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogTitle,
+  DialogTrigger,
+} from "@/components/ui/dialog";
 import { AnimatedTooltip } from "./ui/animated-tooltip";
-
+import NoReviewMessage from "./NoReviewMessage";
 import TweetsDisplaySkeleton from "./skeletons/TweetDisplaySkeleton";
 
 interface TweetInfo {
@@ -53,8 +59,12 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
             <AvatarFallback>{tweet.username[0]}</AvatarFallback>
           </Avatar>
           <div>
-            <p className="font-bold text-white">{tweet.username}</p>
-            <p className="text-gray-500">@{tweet.handle}</p>
+            <DialogTitle className="font-bold text-white">
+              {tweet.username}
+            </DialogTitle>
+            <DialogDescription className="text-gray-500">
+              @{tweet.handle}
+            </DialogDescription>
           </div>
         </div>
         <p className="mt-4 text-white">{tweet.tweetContent}</p>
@@ -68,8 +78,7 @@ function TweetModal({ tweet }: { tweet: TweetInfo }) {
             className="mt-4 rounded-lg object-contain"
           />
         ))}
-        <Badge className="mt-4 mr-2 bg-white text-black font-medium hover:bg-white">
-          {" "}
+        <Badge className="mt-4 mr-2 bg-white text-black font-medium hover:bg-white ">
           <p>{format(new Date(tweet.createdAt), "MMM d, yyyy")}</p>
         </Badge>
         {tweet.status === "Approved" ? (
@@ -132,8 +141,12 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
     await updateTweetStatus(id, status);
   }
 
-  if (isLoading) {
+  if (isLoading && tweetsInfos.length > 0) {
     return <TweetsDisplaySkeleton />;
+  }
+
+  if(tweetsInfos.length === 0){
+    return <NoReviewMessage/>
   }
 
   const totalPages = Math.ceil(tweetsInfos.length / tweetPerPage);
@@ -144,6 +157,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   return (
     <div className="space-y-4 w-[1200px]">
       <hr className="mt-5" />
+      
       {currentTweets.map((tweetsInfo) => (
         <div key={tweetsInfo.id}>
           <div className="flex justify-around hover:bg-zinc-100 transition-colors  duration-500 ease-in-out rounded-xl w-full items-center space-x-4 p-4 cursor-pointer">
@@ -276,10 +290,6 @@ function DropDownMenus({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-[200px]">
-        {/* <DropdownMenuItem>
-          <SquareArrowOutUpRight className="mr-2" />
-          Details
-        </DropdownMenuItem> */}
         <DropdownMenuItem>
           <ArrowRightFromLine className="mr-2" />
           Export
