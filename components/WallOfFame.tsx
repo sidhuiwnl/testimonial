@@ -2,10 +2,12 @@
 
 import React, { useState, useEffect } from "react";
 import { BentoGrid, BentoGridItem } from "./ui/bento-grid";
-
+import { HoverBorderGradient } from "./ui/hover-border-gradient";
 import { getReviews } from "@/server/queries";
 import { useSession } from "@/app/lib/auth-client";
 import WallOfSkeletonComp from "./skeletons/WallOffameSkeleton";
+import { ArrowUpRight } from "lucide-react";
+import Link from "next/link";
 
 interface TweetInfo {
   profile: string;
@@ -52,8 +54,29 @@ export function LayoutGridDemo() {
     fetchData();
   }, [userId]);
 
-  if(isLoading){
-    return <WallOfSkeletonComp/>
+  if (isLoading) {
+    return <WallOfSkeletonComp />;
+  }
+
+  if (tweetsInfos?.length === 0) {
+    return (
+      <div className="flex flex-col space-y-5 justify-center items-center mt-10">
+        <h1 className="text-5xl text-black text-center font-bold max-w-4xl tracking-tight">
+          The Wall Looks Empty! Import Reviews To Showcase your Wall of
+          Achievement 😔😔😔
+        </h1>
+        <Link href={"/dashboard/import"}>
+          <HoverBorderGradient
+            containerClassName="rounded-full"
+            as="button"
+            className="bg-black  text-white flex items-center space-x-2"
+          >
+            <span>Go To Import Review Section</span>
+            <ArrowUpRight />
+          </HoverBorderGradient>
+        </Link>
+      </div>
+    );
   }
   if (error) return <p>{error}</p>;
 
