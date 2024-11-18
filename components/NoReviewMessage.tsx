@@ -11,7 +11,7 @@ export default function NoReviewMessage() {
     }
   }
   return (
-    <div className="w-[900px] h-[300px] flex flex-col p-5 border border-dashed rounded-sm justify-center items-center bg-gradient-to-b from-neutral-700 to-neutral-800">
+    <div className="w-[900px] h-[300px] flex flex-col p-5 border-2 border-dashed  rounded-lg justify-center items-center bg-gradient-to-b from-neutral-700 to-neutral-800">
       <h1 className="text-white mb-4">No Reviews Yet? Import the Reviews</h1>
       <div className="flex  items-center space-x-2 justify-center w-full">
         <input
