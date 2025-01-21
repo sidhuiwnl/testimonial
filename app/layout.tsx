@@ -2,7 +2,8 @@ import type { Metadata } from "next";
 
 import "./globals.css";
 
-import { Roboto_Mono } from "next/font/google";
+import { Plus_Jakarta_Sans } from "next/font/google";
+
 
 export const metadata: Metadata = {
   title: "Collect the reviews",
@@ -10,7 +11,7 @@ export const metadata: Metadata = {
     "Collect your reviews with ease and speed, and share them with the world",
 };
 
-const roboto_mono = Roboto_Mono({
+const jakarta = Plus_Jakarta_Sans({
   subsets: ["latin"],
   display: "swap",
 });
@@ -22,7 +23,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${roboto_mono.className} antialiased flex`}>
+      <body className={`${jakarta.className} antialiased flex`}>
         {children}
       </body>
     </html>

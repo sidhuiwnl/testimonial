@@ -141,7 +141,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
     await updateTweetStatus(id, status);
   }
 
-  if (isLoading && tweetsInfos.length > 0) {
+  if (isLoading ) {
     return <TweetsDisplaySkeleton />;
   }
 
@@ -153,7 +153,7 @@ export default function TweetsDisplay({ userId, setTweetCount }: ReviewProps) {
   const indexofLastTweet = currentPage * tweetPerPage;
   const indexOfFirstTweet = indexofLastTweet - tweetPerPage;
   const currentTweets = tweetsInfos.slice(indexOfFirstTweet, indexofLastTweet);
-
+  
   return (
     <div className="space-y-4 w-[1200px]">
       <hr className="mt-5" />
