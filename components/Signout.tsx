@@ -11,7 +11,7 @@ export default function SignOut() {
         router.push("/login");
       }}
     >
-      <p className="underline font-sm">Logout</p>
+      <div className="underline text-sm font-medium">Logout</div>
     </button>
   );
 }
