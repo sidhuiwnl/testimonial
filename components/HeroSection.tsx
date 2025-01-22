@@ -15,7 +15,7 @@ export default function HeroSection() {
             Premium Reviews as Code.
           </h1>
           <p className="text-sm max-w-3xl mt-9 text-slate-600 text-center mb-10">
-            Take complete charge of your brand's image with static,
+            Take complete charge of your brand&apos;s image with static,
             pre-optimized review components. Just copy & paste to display
             engaging reviews on your website.
           </p>
