@@ -51,6 +51,16 @@ const items = [
     url: "/dashboard/api",
     icon: Search,
   },
+  {
+    title: "Automated Emails",
+    url: "/dashboard/invite",
+    icon: Inbox,
+  },
+  {
+    title: "Templates",
+    url: "/dashboard/templates",
+    icon: Inbox,
+  },
 ];
 
 export function AppSidebar() {
@@ -71,7 +81,7 @@ export function AppSidebar() {
                   <SidebarMenuButton asChild>
                     <Link href={item.url}>
                       <item.icon />
-                      <span>{item.title}</span>
+                      <span className="font-medium text-neutral-800">{item.title}</span>
                     </Link>
                   </SidebarMenuButton>
                 </SidebarMenuItem>
