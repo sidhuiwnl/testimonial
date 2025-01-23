@@ -52,7 +52,7 @@ export default function EmailTemplate({
                             <PencilLine width={15} height={15} className="mr-2"/>
                             <span>Edit Template</span>
                         </Button>
-                        <DropdownMenu  className="w-full">
+                        <DropdownMenu>
                             <DropdownMenuTrigger asChild>
                                 <Button>
                                     <ChevronDown width={15} height={15} className="mr-2"/>
