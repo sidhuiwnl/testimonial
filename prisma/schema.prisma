@@ -14,11 +14,9 @@ datasource db {
 }
 
 model User {
-  id            String        @id
-  sessions      Session[]
- 
-  
-  
+  id       String    @id
+  sessions Session[]
+
   tweetReviews  TweetReview[]
   name          String
   email         String
@@ -27,6 +25,7 @@ model User {
   createdAt     DateTime
   updatedAt     DateTime
   account       Account[]
+  templates     Templates[]
 
   @@unique([email])
   @@map("user")
@@ -68,7 +67,6 @@ model Verification {
   @@map("verification")
 }
 
-
 model TweetReview {
   id           String   @id
   profile      String
@@ -82,4 +80,21 @@ model TweetReview {
   images       String[]
   status       String   @default("pending")
 
+  @@map("tweetreview")
+}
+
+model Templates {
+  id           String   @id
+  templateName String
+  sendersName  String
+  replyToEmail String
+  subject      String
+  body         String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+  placeholders Json
+  userId       String
+  user         User     @relation(references: [id], fields: [userId], onDelete: Cascade)
+
+  @@map("templates")
 }
