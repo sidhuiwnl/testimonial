@@ -1,24 +1,34 @@
 "use client"
-import {Templates} from "@prisma/client";
-import { use } from 'react'
+
+import getTemplates from "@/app/actions/action";
+import {useEffect, useState} from "react";
 import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {Calendar} from "lucide-react";
 import {Button} from "@/components/ui/button";
+import {Templates} from "@prisma/client";
 
-export default  function EmailTemplate({
-    templates,
+export default function EmailTemplate({
+    userId,
                                        } : {
-    templates: Promise<Templates[]>;
+    userId: string;
 }) {
 
-    const allTemplates = use(templates);
+    const[templates, setTemplates] = useState<Templates[]>([])
 
-    console.log(allTemplates);
+    async function templateData(){
+        const templates  = await getTemplates(userId!);
+        setTemplates(templates);
+    }
+
+    useEffect(() => {
+        templateData();
+    }, [userId]);
+
 
 
     return(
         <div>
-            {allTemplates.map((template, ) => (
+            {templates.map((template, ) => (
                 <Card key={template.id} className="w-[300px] min-h-[200px] bg-zinc-100">
                     <CardHeader>
                         <h1 className="font-semibold">{template.templateName}</h1>
