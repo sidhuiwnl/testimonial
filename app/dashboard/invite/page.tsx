@@ -1,6 +1,6 @@
 "use client"
 
-import EmailTemplate from "@/components/ui/EmailTemplate";
+import EmailTemplate from "@/components/EmailTemplate";
 import {useSession} from "@/app/lib/auth-client";
 import {Suspense} from "react";
 
