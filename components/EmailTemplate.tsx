@@ -76,9 +76,13 @@ export default function EmailTemplate({ userId }: { userId: string }) {
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 p-4">
             {templates.map((template) => (
                 <Link
-                    href={`${process.env.NEXT_PUBLIC_BASE_URL}/${pathname}/template/${template.id}`}
+                    href={{
+                        pathname: `${process.env.NEXT_PUBLIC_BASE_URL}/${pathname}/template/${template.id}`,
+                        query : { content : template.body, subject : template.subject}
+                    }}
                     key={template.id}
                     className="group"
+
                 >
                     <Card className="
                         w-full 
