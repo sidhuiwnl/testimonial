@@ -40,9 +40,9 @@ export default function EmailTemplate({ userId }: { userId: string }) {
         templateData();
     }, [userId]);
 
-    // Calculate number of placeholders (this is a placeholder logic, replace with actual logic)
+
     const calculatePlaceholders = (template: Templates) => {
-        // Example placeholder calculation
+
         return template.templateName.split('{{').length - 1;
     };
 

@@ -2,6 +2,17 @@ import {Card, CardContent, CardHeader} from "@/components/ui/card";
 import {Label} from "@/components/ui/label";
 import {Input} from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import {
+    Sidebar,
+    SidebarContent, SidebarFooter,
+    SidebarGroup,
+    SidebarGroupContent,
+    SidebarGroupLabel,
+    SidebarMenu,
+} from "@/components/ui/sidebar";
+import {BeerIcon, ChevronUp} from "lucide-react";
+
+import {Placeholders} from "@/app/constants/template";
 
 export default function Page() {
     return (
@@ -42,4 +53,34 @@ export default function Page() {
             </Card>
         </div>
     );
+}
+
+
+export function TemplateSidebar(){
+    return(
+        <Sidebar>
+            <SidebarContent>
+                <SidebarGroup>
+                    <SidebarGroupLabel className="underline text-black mt-2 mb-3">
+                        <BeerIcon className="mr-2 " />
+                        Testimonial
+                    </SidebarGroupLabel>
+                    <SidebarGroupContent>
+                        <SidebarMenu className="flex items-center space-y-3">
+                            {Placeholders.map((item, index) => (
+                                <div>
+                                    <Label>{item.label}</Label>
+                                    {item.component}
+                                </div>
+
+                            ))}
+                        </SidebarMenu>
+                    </SidebarGroupContent>
+                </SidebarGroup>
+            </SidebarContent>
+            <SidebarFooter>
+
+            </SidebarFooter>
+        </Sidebar>
+    )
 }
