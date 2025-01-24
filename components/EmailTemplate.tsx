@@ -14,13 +14,15 @@ import {
     DropdownMenuItem,
     DropdownMenuGroup, DropdownMenuShortcut, DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
+import Link from "next/link";
+import {usePathname} from "next/navigation";
 
 export default function EmailTemplate({
     userId,
                                        } : {
     userId: string;
 }) {
-
+    const pathname = usePathname();
     const[templates, setTemplates] = useState<Templates[]>([])
 
     async function templateData(){
@@ -37,6 +39,7 @@ export default function EmailTemplate({
     return(
         <div>
             {templates.map((template, ) => (
+                <Link href={`${process.env.NEXT_PUBLIC_BASE_URL}/${pathname}/template/${template.id}`} key={template.id}>
                 <Card key={template.id} className="w-[300px] min-h-[200px] bg-zinc-100">
                     <CardHeader>
                         <h1 className="font-semibold">{template.templateName}</h1>
@@ -48,13 +51,13 @@ export default function EmailTemplate({
                         </p>
                         <p className="text-sm">3 placeholders</p>
                         <hr/>
-                        <Button>
+                        <Button className="h-10">
                             <PencilLine width={15} height={15} className="mr-2"/>
                             <span>Edit Template</span>
                         </Button>
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button>
+                                <Button className="h-10">
                                     <ChevronDown width={15} height={15} className="mr-2"/>
                                     <span>Action</span>
                                 </Button>
@@ -83,6 +86,7 @@ export default function EmailTemplate({
 
                     </CardContent>
                 </Card>
+                </Link>
             ))}
         </div>
     )
