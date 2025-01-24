@@ -37,8 +37,6 @@ export default function Page() {
                         >
                             Write a Review 👉</Button>
                     </div>
-
-
                 </CardContent>
 
             </Card>
