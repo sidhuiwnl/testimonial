@@ -16,7 +16,7 @@ export default function Page() {
                     <div className="flex-grow"></div>
                 </CardHeader>
                 <CardContent>
-                    <div className="w-full flex items-center space-x-2 px-4 py-4  border-b border-b-neutral-400 bg-neutral-100">
+                    <div className="w-full flex items-center space-x-2 px-4 py-4  border-b border-b-neutral-300 bg-neutral-100">
                         <Label className="text-neutral-500">subject:</Label>
                         <Input
                             type={"text"}
