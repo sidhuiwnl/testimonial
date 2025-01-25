@@ -75,8 +75,8 @@ export async function updateTemplate(
             message: "Template updated successfully",
             template: updatedTemplate,
         };
-    } catch (error: any) {
-        console.error("Error updating template:", error.message || error);
+    } catch (error) {
+        console.error("Error updating template:",  error);
         return {
             status: "error",
             message: "An error occurred while updating the template",

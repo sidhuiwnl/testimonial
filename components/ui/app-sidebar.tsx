@@ -189,7 +189,7 @@ export function TemplateSidebar({
                       placeholder="Sidharth"
                       className="h-10"
                   />
-                  <p className="text-sm text-gray-500">How you'll appear in the recipient's inbox</p>
+                  <p className="text-sm text-gray-500">How you&apos;ll appear in the recipient&apos;s inbox</p>
                 </div>
 
                 <div className="flex flex-col space-y-2">
