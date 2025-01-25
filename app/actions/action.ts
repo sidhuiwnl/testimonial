@@ -84,23 +84,23 @@ export async function updateTemplate(
     }
 }
 
-// export async  function getTemplate(templateId: string) : Promise<Templates | null>{
-//     if (!templateId) {
-//         throw new Error("Template ID is required");
-//     }
-//
-//     try {
-//         const template = await client.templates.findUnique({
-//             where: { id: templateId },
-//         })
-//
-//         if(!template){
-//             console.warn(`No template found for ID: ${templateId}`);
-//         }
-//
-//         return template;
-//     }catch(err) {
-//         console.error(err);
-//         throw new Error("An error occurred while fetching the template");
-//     }
-// }
+export async  function getTemplate(templateId: string) : Promise<Templates | null>{
+    if (!templateId) {
+        throw new Error("Template ID is required");
+    }
+
+    try {
+        const template = await client.templates.findUnique({
+            where: { id: templateId },
+        })
+
+        if(!template){
+            console.warn(`No template found for ID: ${templateId}`);
+        }
+
+        return template;
+    }catch(err) {
+        console.error(err);
+        throw new Error("An error occurred while fetching the template");
+    }
+}
