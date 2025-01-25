@@ -78,7 +78,7 @@ export default function EmailTemplate({ userId }: { userId: string }) {
                 <Link
                     href={{
                         pathname: `${process.env.NEXT_PUBLIC_BASE_URL}/${pathname}/template/${template.id}`,
-                        query : { content : template.body, subject : template.subject}
+                        query : { content : template.body, subject : template.subject,name : template.templateName,templateId: template.id }
                     }}
                     key={template.id}
                     className="group"

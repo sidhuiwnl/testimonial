@@ -6,7 +6,7 @@ import {
   Home,
   Inbox,
   Search,
-  BeerIcon,
+  BeerIcon, ArrowLeft,
 } from "lucide-react";
 import { useSession } from "@/app/lib/auth-client";
 import Link from "next/link";
@@ -29,6 +29,12 @@ import {
 } from "./dropdown-menu";
 import Image from "next/image";
 import SignOut from "../Signout";
+
+import {Label} from "@/components/ui/label";
+import {Button} from "@/components/ui/button";
+import {updateTemplate} from "@/app/actions/action";
+import {useState} from "react";
+import { Input } from "@/components/ui/input";
 
 const items = [
   {
@@ -131,3 +137,81 @@ export function AppSidebar() {
   );
 }
 
+
+export function TemplateSidebar({
+    templateId,templateName,subject,body
+                                } : {
+  templateId : string | null,
+  templateName : string | null,
+  subject: string | null,
+  body : string | null,
+}){
+  const[name,setName]=useState(templateName);
+  const session = useSession();
+  const user = session.data?.user;
+
+
+
+  return(
+      <Sidebar >
+        <SidebarContent className="p-4">
+          <SidebarGroup>
+            <SidebarGroupLabel className="underline text-black  mb-3">
+              <BeerIcon className="mr-2 " />
+              Testimonial
+            </SidebarGroupLabel>
+            <Link
+                href="/dashboard/invite"
+                className="text-sm flex items-center space-x-2 mt-5"
+            >
+              <ArrowLeft width={20} height={20} />
+              <span className="font-medium">Back</span>
+            </Link>
+            <SidebarGroupContent className="mt-20">
+
+              <SidebarMenu className="flex items-center space-y-6">
+                <div className="flex flex-col space-y-2">
+                  <Label>Template Name</Label>
+                  <Input
+                      type="text"
+                      value={name!}
+                      placeholder="Template name"
+                      className="h-10"
+                      onChange={e => setName(e.target.value)}
+                  />
+                  <p className="text-sm text-gray-500"></p>
+                </div>
+
+                <div className="flex flex-col space-y-2">
+                  <Label>Sender Name</Label>
+                  <Input
+                      type="text"
+                      placeholder="Sidharth"
+                      className="h-10"
+                  />
+                  <p className="text-sm text-gray-500">How you'll appear in the recipient's inbox</p>
+                </div>
+
+                <div className="flex flex-col space-y-2">
+                  <Label>Reply-to email</Label>
+                  <Input
+                      type="email"
+                      placeholder="reply@email.com"
+                      className="h-10"
+                  />
+                  <p className="text-sm text-gray-500"></p>
+                </div>
+              </SidebarMenu>
+            </SidebarGroupContent>
+          </SidebarGroup>
+        </SidebarContent>
+        <SidebarFooter className="mb-10">
+          <Button
+              onClick={async () => {
+                await updateTemplate(templateId, templateName, subject, body, user?.id)
+              }}
+          >Save Template</Button>
+        </SidebarFooter>
+      </Sidebar>
+  )
+}
