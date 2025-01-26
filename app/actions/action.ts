@@ -2,9 +2,12 @@
 
 import {client} from "@/app/lib/prisma";
 import {Templates} from "@prisma/client";
+import {generateRandomString} from "@/app/lib/utils";
 
 
-export default async function getTemplates(userId: string): Promise<Templates[]> {
+import {revalidatePath} from "next/cache";
+
+export  async function getTemplates(userId: string): Promise<Templates[]> {
     if (!userId) {
         throw  new Error("The user found,Unauthorized");
     }
@@ -106,5 +109,58 @@ export async  function getTemplate(templateId: string) : Promise<Templates | nul
     }catch(err) {
         console.error(err);
         throw new Error("An error occurred while fetching the template");
+    }
+}
+
+export async function createTemplate(userId :string){
+    if (!userId) {
+        throw new Error("User ID is required for template creation.");
+    }
+
+    try {
+        const  response = await client.templates.create({
+            data : {
+                id : generateRandomString(),
+                sendersName : "",
+                replyToEmail : "",
+                subject : "",
+                body : "",
+                userId : userId,
+                placeholders : ["user_name","date"],
+            }
+        })
+        revalidatePath(`/dashboard/invite`)
+
+        return response;
+
+    }catch(err) {
+        console.error(err);
+        throw new Error("An error occurred while creating the template");
+    }
+
+}
+
+export async function deleteTemplate(userId :string,templateId:string){
+    if (!userId) {
+        throw new Error("Unauthorized for template Deletion")
+    }
+
+    if (!templateId){
+        throw new Error("Template ID is required");
+    }
+
+    try {
+         await client.templates.delete({
+            where : {
+                id : templateId,
+                userId : userId,
+            }
+        })
+
+
+
+    }catch(err) {
+        console.error(err);
+        throw new Error("An error occurred while deleteing the template");
     }
 }

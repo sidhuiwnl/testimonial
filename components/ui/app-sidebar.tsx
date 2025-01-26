@@ -33,7 +33,7 @@ import SignOut from "../Signout";
 import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
 import {updateTemplate} from "@/app/actions/action";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 import { Input } from "@/components/ui/input";
 
 const items = [
@@ -139,14 +139,15 @@ export function AppSidebar() {
 
 
 export function TemplateSidebar({
-    templateId,templateName,subject,body
+    templateId,templateName,subject,body,onTemplateNameChange,
                                 } : {
-  templateId : string | null,
-  templateName : string | null,
-  subject: string | null,
-  body : string | null,
+  templateId : string ,
+  templateName : string ,
+  subject: string ,
+  body : string ,
+  onTemplateNameChange : (name : string) => void ,
 }){
-  const[name,setName]=useState(templateName);
+
   const[senderName,setSenderName]=useState("");
   const[replyEmail,setReplyEmail]=useState("");
   const session = useSession();
@@ -158,7 +159,7 @@ export function TemplateSidebar({
       <Sidebar >
         <SidebarContent className="p-4">
           <SidebarGroup>
-            <SidebarGroupLabel className="underline text-black  mb-3">
+            <SidebarGroupLabel className="underline  text-black  mb-3">
               <BeerIcon className="mr-2 " />
               Testimonial
             </SidebarGroupLabel>
@@ -176,10 +177,10 @@ export function TemplateSidebar({
                   <Label>Template Name</Label>
                   <Input
                       type="text"
-                      value={name!}
+                      value={templateName}
                       placeholder="Template name"
                       className="h-10"
-                      onChange={e => setName(e.target.value)}
+                      onChange={e => onTemplateNameChange(e.target.value)}
                   />
                   <p className="text-sm text-gray-500"></p>
                 </div>

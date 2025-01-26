@@ -85,14 +85,14 @@ model TweetReview {
 
 model Templates {
   id           String   @id
-  templateName String
+  templateName String   @default("Untitled")
   sendersName  String
   replyToEmail String
   subject      String
   body         String
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  placeholders Json
+  placeholders String[]
   userId       String
   user         User     @relation(references: [id], fields: [userId], onDelete: Cascade)
 

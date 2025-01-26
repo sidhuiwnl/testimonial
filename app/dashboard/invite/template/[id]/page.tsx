@@ -4,28 +4,36 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { useSearchParams } from "next/navigation";
+
 import { TemplateSidebar } from "@/components/ui/app-sidebar";
-import { useEffect, useState, useRef } from "react";
+import { useEffect, useState} from "react";
 import { getTemplate } from "@/app/actions/action";
-import DOMPurify from "dompurify";
+
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import {useSearchParams} from "next/navigation";
 
 export default function Page() {
+
+
+
     const searchParams = useSearchParams();
+
     const templateId = searchParams.get("templateId");
-    const templateName = searchParams.get("name");
+    const[templateName,setTemplateName] = useState<string | undefined>(undefined);
     const [subject, setSubject] = useState<string | undefined>(undefined);
     const [body, setBody] = useState<string | undefined>(undefined);
-    const bodyRef = useRef<HTMLDivElement>(null);
+
 
 
     async function fetchTemplate() {
         if (!templateId) return;
         const response = await getTemplate(templateId);
+
+        setTemplateName(response?.templateName);
         setSubject(response?.subject);
         setBody(response?.body);
+
     }
 
     useEffect(() => {
@@ -42,8 +50,9 @@ export default function Page() {
     return (
         <div className="flex justify-center items-center">
             <TemplateSidebar
-                templateId={templateId || ""}
-                templateName={templateName || ""}
+                templateId={templateId!}
+                templateName={templateName!}
+                onTemplateNameChange={setTemplateName}
                 subject={subject!}
                 body={body!}
             />
@@ -74,7 +83,7 @@ export default function Page() {
                                 value={body || ""}
                                 onChange={setBody}
                                 placeholder="Enter email body..."
-                                className="plus-jakarta-sans-body w-full"
+                                className="plus-jakarta-sans-body w-full min-h-[300px]"
                             />
                             <Button className="bg-neutral-800 hover:bg-neutral-700 w-[500px] h-12 bottom-4 mt-4">
                                 Save Changes
