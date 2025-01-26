@@ -33,7 +33,7 @@ import SignOut from "../Signout";
 import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
 import {updateTemplate} from "@/app/actions/action";
-import {useEffect, useState} from "react";
+
 import { Input } from "@/components/ui/input";
 
 const items = [
