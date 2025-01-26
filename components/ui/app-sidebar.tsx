@@ -139,14 +139,17 @@ export function AppSidebar() {
 
 
 export function TemplateSidebar({
-    templateId,templateName,subject,body
+    templateId,templateName,subject,body,onTemplateNameChange,
                                 } : {
-  templateId : string | null,
-  templateName : string | null,
-  subject: string | null,
-  body : string | null,
+  templateId : string ,
+  templateName : string ,
+  subject: string ,
+  body : string ,
+  onTemplateNameChange : (name : string) => void ,
 }){
-  const[name,setName]=useState(templateName);
+
+  const[senderName,setSenderName]=useState("");
+  const[replyEmail,setReplyEmail]=useState("");
   const session = useSession();
   const user = session.data?.user;
 
@@ -156,7 +159,7 @@ export function TemplateSidebar({
       <Sidebar >
         <SidebarContent className="p-4">
           <SidebarGroup>
-            <SidebarGroupLabel className="underline text-black  mb-3">
+            <SidebarGroupLabel className="underline  text-black  mb-3">
               <BeerIcon className="mr-2 " />
               Testimonial
             </SidebarGroupLabel>
@@ -174,10 +177,10 @@ export function TemplateSidebar({
                   <Label>Template Name</Label>
                   <Input
                       type="text"
-                      value={name!}
+                      value={templateName}
                       placeholder="Template name"
                       className="h-10"
-                      onChange={e => setName(e.target.value)}
+                      onChange={e => onTemplateNameChange(e.target.value)}
                   />
                   <p className="text-sm text-gray-500"></p>
                 </div>
@@ -185,9 +188,11 @@ export function TemplateSidebar({
                 <div className="flex flex-col space-y-2">
                   <Label>Sender Name</Label>
                   <Input
+                      value={senderName}
                       type="text"
                       placeholder="Sidharth"
                       className="h-10"
+                      onChange={e => setSenderName(e.target.value)}
                   />
                   <p className="text-sm text-gray-500">How you&apos;ll appear in the recipient&apos;s inbox</p>
                 </div>
@@ -195,9 +200,11 @@ export function TemplateSidebar({
                 <div className="flex flex-col space-y-2">
                   <Label>Reply-to email</Label>
                   <Input
+                      value={replyEmail}
                       type="email"
                       placeholder="reply@email.com"
                       className="h-10"
+                      onChange={e => setReplyEmail(e.target.value)}
                   />
                   <p className="text-sm text-gray-500"></p>
                 </div>
@@ -208,7 +215,7 @@ export function TemplateSidebar({
         <SidebarFooter className="mb-10">
           <Button
               onClick={async () => {
-                await updateTemplate(templateId, templateName, subject, body, user?.id)
+                await updateTemplate(templateId, templateName, subject, body, user?.id,senderName,replyEmail)
               }}
           >Save Template</Button>
         </SidebarFooter>
