@@ -7,6 +7,8 @@ import {
   Inbox,
   Search,
   BeerIcon, ArrowLeft,
+    Mail,
+    LayoutIcon
 } from "lucide-react";
 import { useSession } from "@/app/lib/auth-client";
 import Link from "next/link";
@@ -36,6 +38,7 @@ import {updateTemplate} from "@/app/actions/action";
 import {useState} from "react";
 import { Input } from "@/components/ui/input";
 
+
 const items = [
   {
     title: "Import Review",
@@ -60,12 +63,12 @@ const items = [
   {
     title: "Automated Emails",
     url: "/dashboard/invite",
-    icon: Inbox,
+    icon: Mail,
   },
   {
     title: "Templates",
-    url: "/dashboard/templates",
-    icon: Inbox,
+    url: "/dashboard/form",
+    icon: LayoutIcon,
   },
 ];
 
@@ -82,8 +85,8 @@ export function AppSidebar() {
             <BeerIcon className="mr-2 " />
             Testimonial
           </SidebarGroupLabel>
-          <SidebarGroupContent>
-            <SidebarMenu>
+          <SidebarGroupContent className="mt-6">
+            <SidebarMenu className="flex flex-col space-y-3">
               {items.map((item) => (
                 <SidebarMenuItem key={item.title}>
                   <SidebarMenuButton asChild>
