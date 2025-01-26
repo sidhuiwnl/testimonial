@@ -147,6 +147,8 @@ export function TemplateSidebar({
   body : string | null,
 }){
   const[name,setName]=useState(templateName);
+  const[senderName,setSenderName]=useState("");
+  const[replyEmail,setReplyEmail]=useState("");
   const session = useSession();
   const user = session.data?.user;
 
@@ -185,9 +187,11 @@ export function TemplateSidebar({
                 <div className="flex flex-col space-y-2">
                   <Label>Sender Name</Label>
                   <Input
+                      value={senderName}
                       type="text"
                       placeholder="Sidharth"
                       className="h-10"
+                      onChange={e => setSenderName(e.target.value)}
                   />
                   <p className="text-sm text-gray-500">How you&apos;ll appear in the recipient&apos;s inbox</p>
                 </div>
@@ -195,9 +199,11 @@ export function TemplateSidebar({
                 <div className="flex flex-col space-y-2">
                   <Label>Reply-to email</Label>
                   <Input
+                      value={replyEmail}
                       type="email"
                       placeholder="reply@email.com"
                       className="h-10"
+                      onChange={e => setReplyEmail(e.target.value)}
                   />
                   <p className="text-sm text-gray-500"></p>
                 </div>
@@ -208,7 +214,7 @@ export function TemplateSidebar({
         <SidebarFooter className="mb-10">
           <Button
               onClick={async () => {
-                await updateTemplate(templateId, templateName, subject, body, user?.id)
+                await updateTemplate(templateId, templateName, subject, body, user?.id,senderName,replyEmail)
               }}
           >Save Template</Button>
         </SidebarFooter>

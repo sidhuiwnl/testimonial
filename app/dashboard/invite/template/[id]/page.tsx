@@ -8,6 +8,9 @@ import { useSearchParams } from "next/navigation";
 import { TemplateSidebar } from "@/components/ui/app-sidebar";
 import { useEffect, useState, useRef } from "react";
 import { getTemplate } from "@/app/actions/action";
+import DOMPurify from "dompurify";
+import ReactQuill from "react-quill";
+import "react-quill/dist/quill.snow.css";
 
 export default function Page() {
     const searchParams = useSearchParams();
@@ -33,25 +36,6 @@ export default function Page() {
         setSubject(e.target.value);
     };
 
-    const handleBodyChange = (e: React.FormEvent<HTMLDivElement>) => {
-        const target = e.currentTarget;
-        const selection = window.getSelection();
-        const cursorPosition = selection?.anchorOffset || 0; // Get cursor position
-
-        setBody(target.textContent || "");
-
-
-        setTimeout(() => {
-            if (bodyRef.current) {
-                const range = document.createRange();
-                const selection = window.getSelection();
-                range.setStart(bodyRef.current.childNodes[0], cursorPosition);
-                range.collapse(true);
-                selection?.removeAllRanges();
-                selection?.addRange(range);
-            }
-        }, 0);
-    };
 
 
 
@@ -83,25 +67,20 @@ export default function Page() {
                             className="border-none placeholder:text-neutral-800 font-medium focus:outline-none shadow-none"
                         />
                     </div>
-                    <div className="min-h-[300px] relative p-4 rounded-lg">
-                        <div
-                            ref={bodyRef}
-                            role="textbox"
-                            aria-label="Email body editor"
-                            className="focus:outline-none"
-                            contentEditable={true}
-                            suppressContentEditableWarning={true}
-                            onInput={handleBodyChange}
-                        >
-                            {body}
+                    <div className="min-h-[300px] flex flex-col items-center  p-4 rounded-lg">
+                        <div className="min-h-[300px] flex flex-col items-center p-4 rounded-lg">
+                            <ReactQuill
+                                theme="snow"
+                                value={body || ""}
+                                onChange={setBody}
+                                placeholder="Enter email body..."
+                                className="plus-jakarta-sans-body w-full"
+                            />
+                            <Button className="bg-neutral-800 hover:bg-neutral-700 w-[500px] h-12 bottom-4 mt-4">
+                                Save Changes
+                            </Button>
                         </div>
 
-                        <Button
-
-                            className="bg-neutral-800 hover:bg-neutral-700 absolute w-[500px] h-12 bottom-4 left-1/2 transform -translate-x-1/2"
-                        >
-                            Save Changes
-                        </Button>
                     </div>
                 </CardContent>
             </Card>

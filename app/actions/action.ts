@@ -27,6 +27,8 @@ export async function updateTemplate(
     subject: string | null,
     content: string | null,
     userId: string | undefined,
+    senderName : string,
+    replyEmail :string
 ) {
 
 
@@ -67,6 +69,8 @@ export async function updateTemplate(
                 templateName: name!,
                 subject : subject!,
                 body: content!,
+                sendersName: senderName!,
+                replyToEmail: replyEmail!,
             },
         });
 
