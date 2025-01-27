@@ -40,7 +40,7 @@ export default function ReviewForm() {
     const steps = [
         {
             title: "Make it personal",
-            icon: <Upload className="w-6 h-6" />,
+            icon: <Upload className="w-6 h-6 " />,
         },
         {
             title: "Rate your experience",
@@ -65,7 +65,7 @@ export default function ReviewForm() {
                                 <motion.div
                                     className={cn(
                                         "relative flex items-center justify-center w-12 h-12 rounded-full",
-                                        step >= i ? "bg-primary" : "bg-muted",
+                                        step >= i ? "bg-primary text-white " : "bg-muted ",
                                     )}
                                     whileHover={{ scale: 1.05 }}
                                 >
@@ -81,7 +81,7 @@ export default function ReviewForm() {
                                     )}
                                 </motion.div>
                                 {i < steps.length - 1 && (
-                                    <div className={cn("w-20 h-0.5 mx-2", step > i ? "bg-primary" : "bg-muted")} />
+                                    <div className={cn("w-20 h-0.5 mx-2", step > i ? "bg-primary text-white" : "bg-muted")} />
                                 )}
                             </div>
                         ))}
