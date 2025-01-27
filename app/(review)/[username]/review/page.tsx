@@ -4,8 +4,22 @@ import { useState } from "react"
 import { Camera, Pencil, Upload, Sparkles, ImageIcon } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
+import {
+    Drawer,
+    DrawerTrigger,
+    DrawerContent,
+    DrawerTitle,
+    DrawerHeader,
+    DrawerDescription, DrawerClose
+} from "@/components/ui/drawer";
+
+import {useSession} from "@/app/lib/auth-client";
+import Link from "next/link";
 
 export default function ReviewForm() {
+    const session = useSession()
+    const username = session?.data?.user.name.replace(/\s/g, "").toLowerCase();
+
     const [dragActive, setDragActive] = useState(false)
     const [uploadProgress, setUploadProgress] = useState(0)
 
@@ -38,7 +52,7 @@ export default function ReviewForm() {
                 <div className="absolute inset-0 bg-grid-black/[0.02] dark:bg-grid-white/[0.02]" />
             </div>
 
-            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative w-full max-w-4xl">
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} className="relative w-full max-w-4xl shadow-xl rounded-3xl">
                 <div className="absolute inset-0 bg-white/40 dark:bg-black/40 backdrop-blur-xl rounded-3xl" />
 
                 <div className="relative p-8 md:p-12">
@@ -113,7 +127,7 @@ export default function ReviewForm() {
                                 <p className="text-xl font-semibold mb-2">Drop your creativity here</p>
                                 <p className="text-sm text-muted-foreground mb-6">Share photos or videos that tell your story</p>
                                 <div className="flex flex-wrap gap-2 justify-center mb-4">
-                                    {["JPG", "PNG", "MP4", "MOV"].map((format, i) => (
+                                    {["JPG", "PNG", "MP4", "MOV"].map((format) => (
                                         <span key={format} className="px-2 py-1 rounded-md bg-muted/50 text-xs font-medium">
                       {format}
                     </span>
@@ -135,24 +149,35 @@ export default function ReviewForm() {
 
                     <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6">
                         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                            <Button
-                                className="w-full h-14 text-lg rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:to-primary"
-                                size="lg"
-                            >
-                                <Camera className="mr-2 h-5 w-5" />
-                                Record Video Review
-                            </Button>
+                            <Drawer>
+                                <DrawerTrigger  className="w-[350px] flex justify-center items-center h-14 text-lg rounded-xl bg-gradient-to-r from-primary to-primary/80 hover:to-primary">
+                                        <Camera className="mr-2 h-5 w-5 text-white" />
+                                        <span className="text-white">Record Video Review</span>
+
+                                </DrawerTrigger>
+                                <DrawerContent className="flex flex-col items-center">
+                                    <DrawerHeader>
+                                        <DrawerTitle className="text-5xl mb-2 ">Record a Video</DrawerTitle>
+                                        <DrawerDescription>Scan The QR-Code to record a video with your phone :)</DrawerDescription>
+                                    </DrawerHeader>
+                                    <DrawerClose >
+                                        <Button className="w-[400px]" variant="outline">Cancel</Button>
+                                    </DrawerClose>
+                                </DrawerContent>
+                            </Drawer>
                         </motion.div>
 
                         <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }}>
-                            <Button
-                                variant="outline"
-                                className="w-full h-14 text-lg rounded-xl border-2 group hover:border-primary/50"
-                                size="lg"
-                            >
-                                <Pencil className="mr-2 h-5 w-5 transition-transform group-hover:rotate-12" />
-                                Write Review
-                            </Button>
+                            <Link href={`/${username}/direct-review`}>
+                                <Button
+                                    variant="outline"
+                                    className="w-full h-14 text-lg rounded-xl border-2 group hover:border-primary/50"
+                                    size="lg"
+                                >
+                                    <Pencil className="mr-2 h-5 w-5 transition-transform group-hover:rotate-12" />
+                                    Write Review
+                                </Button>
+                            </Link>
                         </motion.div>
                     </div>
                 </div>
