@@ -1,3 +1,6 @@
+import Safari from "@/components/ui/safari";
+
+
 export default function HeroSection() {
   return (
       <div className="flex justify-center">
@@ -19,7 +22,13 @@ export default function HeroSection() {
             pre-optimized review components. Just copy & paste to display
             engaging reviews on your website.
           </p>
-
+          <div className="relative">
+            <Safari
+                url="testimonial-vert.vercel.app"
+                className="size-full"
+                imageSrc={"https://us7xgl2xx9.ufs.sh/f/NLwJvYRc8DXfIfZipfaRns6xz2YmqoMfX40btuQZGJr7iAyK"}
+            />
+          </div>
         </div>
       </div>
   );

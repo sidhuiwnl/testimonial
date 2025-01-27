@@ -127,7 +127,7 @@ export default function ReviewForm() {
                                 <p className="text-xl font-semibold mb-2">Drop your creativity here</p>
                                 <p className="text-sm text-muted-foreground mb-6">Share photos or videos that tell your story</p>
                                 <div className="flex flex-wrap gap-2 justify-center mb-4">
-                                    {["JPG", "PNG", "MP4", "MOV"].map((format, i) => (
+                                    {["JPG", "PNG", "MP4", "MOV"].map((format) => (
                                         <span key={format} className="px-2 py-1 rounded-md bg-muted/50 text-xs font-medium">
                       {format}
                     </span>
