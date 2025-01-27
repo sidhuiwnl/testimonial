@@ -13,11 +13,12 @@ export default function EmailSection() {
     return(
         <div>
             <h1 className="text-4xl font-semibold tracking-tight">Invite Others To Review</h1>
-            <p className="font-medium mt-2 text-zinc-600 antialiased">Create and manage email templates, then send them manually or schedule automated delivery.</p>
+            <p className="font-medium mt-2 text-zinc-600 antialiased">Create and manage email templates, then send them
+                manually or schedule automated delivery.</p>
+            <h1 className="font-bold mt-20 ml-5">Email Templates</h1>
             <div className="mt-10 flex flex-col space-y-20">
-                <h1>Email Templates</h1>
                 <Suspense fallback={<div>...Loading</div>}>
-                    <EmailTemplate userId={userId!} />
+                    <EmailTemplate userId={userId!}/>
                 </Suspense>
 
             </div>
