@@ -7,7 +7,7 @@ import { Button } from "@/components/ui/button";
 
 import { TemplateSidebar } from "@/components/ui/app-sidebar";
 import { useEffect, useState} from "react";
-import { getTemplate } from "@/app/actions/action";
+import {getTemplate} from "@/server/queries";
 
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";

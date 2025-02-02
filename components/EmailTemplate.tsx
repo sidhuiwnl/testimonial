@@ -16,7 +16,8 @@ import {
     DropdownMenuGroup,
     DropdownMenuSeparator
 } from "@/components/ui/dropdown-menu";
-import { getTemplates,deleteTemplate }from "@/app/actions/action";
+
+import { getTemplates,deleteTemplate }from "@/server/queries";
 import { Templates } from "@prisma/client";
 import CreateTemplate from "@/components/CreateTemplate";
 import { toast } from "sonner"

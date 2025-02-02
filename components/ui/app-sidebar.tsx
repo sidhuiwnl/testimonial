@@ -34,7 +34,7 @@ import SignOut from "../Signout";
 
 import {Label} from "@/components/ui/label";
 import {Button} from "@/components/ui/button";
-import {updateTemplate} from "@/app/actions/action";
+import {updateTemplate} from "@/server/queries";
 import {useState} from "react";
 import { Input } from "@/components/ui/input";
 
