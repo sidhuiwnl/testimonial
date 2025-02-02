@@ -1,6 +1,6 @@
 "use client";
 
-import {UploadButton} from "@/app/lib/uploadthing";
+import {UploadButton} from "../app/lib/uploadthing";
 import { toast } from "sonner";
 
 export default function CustomUploadButton() {
