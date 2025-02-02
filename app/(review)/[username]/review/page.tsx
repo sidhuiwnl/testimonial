@@ -15,7 +15,7 @@ import {
 
 import {useSession} from "@/app/lib/auth-client";
 import Link from "next/link";
-import {UploadButton} from "@/app/lib/uploadthing";
+import CustomUploadButton from "@/components/upload-button";
 import { toast } from "sonner"
 
 
@@ -153,19 +153,8 @@ export default function ReviewForm() {
                                 {/*        }}*/}
                                 {/*    />*/}
                                 {/*</Button>*/}
-                                <UploadButton
-                                    className="bg-neutral-800 text-white rounded-lg"
-                                    endpoint="imageUploader"
-                                onClientUploadComplete={(res) =>{
-                                    toast.success("File uploaded successfully.")
-                                    console.log(res)
-                                    localStorage.setItem("uploadedFileUrl",res[0].url)
-                                }}
-                                onUploadError={(error: Error) => {
-                                    toast.error(error.message)
+                                <CustomUploadButton/>
 
-                                }}
-                            />
                             </motion.div>
                         </div>
                     </motion.div>
