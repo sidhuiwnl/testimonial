@@ -15,7 +15,7 @@ import {
 
 import {useSession} from "@/app/lib/auth-client";
 import Link from "next/link";
-import {UploadButton} from "@/app/lib/uploadthing";
+import UploadButton from "@/app/lib/uploadthing";
 import { toast } from "sonner"
 
 
