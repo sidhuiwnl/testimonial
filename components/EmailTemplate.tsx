@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+
 import { Calendar, PencilLine, ChevronDown, Trash2, Send, Code } from "lucide-react";
 import {
     Card,
@@ -23,7 +23,7 @@ import CreateTemplate from "@/components/CreateTemplate";
 import { toast } from "sonner"
 
 export default function EmailTemplate({ userId }: { userId: string }) {
-    const pathname = usePathname();
+
     const [templates, setTemplates] = useState<Templates[]>([]);
     const [isLoading, setIsLoading] = useState(true);
 
