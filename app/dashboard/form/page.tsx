@@ -22,13 +22,13 @@ export default function Form(){
                 <span
 
                     className="text-teal-700 font-medium"
-                >{`https://testimonial-vert.vercel.app/${username}/review`}</span>
+                >{`http://localhost:3000/${username}/review`}</span>
                 <CopyIcon
                     width={15}
                     height={15}
                     className="cursor-pointer "
                     onClick={() => {
-                        const link = `https://testimonial-vert.vercel.app/${username}/review`
+                        const link = `http://localhost:3000/${username}/review`
                         window.navigator.clipboard.writeText(link);
                         toast.success("The Link has been copied!");
                     }}
