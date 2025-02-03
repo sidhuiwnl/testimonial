@@ -13,9 +13,18 @@ function corsMiddleware(request: NextRequest) {
 }
 
 export async function middleware(request: NextRequest) {
-  if (request.nextUrl.pathname.startsWith("/api/")) {
+  const { pathname } = request.nextUrl;
+
+
+  if (pathname.startsWith("/api/")) {
     return corsMiddleware(request);
   }
+
+
+  if (pathname === "/login" || pathname.startsWith("/public")) {
+    return NextResponse.next();
+  }
+
 
   return authMiddleware({
     redirectTo: "/login",
@@ -23,5 +32,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/:path*"],
+  matcher: ["/((?!_next|static|favicon.ico).*)"],
 };
