@@ -83,7 +83,7 @@ export default function EmailTemplate({ userId }: { userId: string }) {
                     ">
                         <Link
                             href={{
-                                pathname: `${process.env.NEXT_PUBLIC_BASE_URL}/${pathname}/template/${template.id}`,
+                                pathname: `/dashboard/invite/template/${template.id}`,
                                 query: { name: template.templateName, templateId: template.id }
                             }}
                         >
