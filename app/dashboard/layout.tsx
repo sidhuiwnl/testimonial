@@ -1,7 +1,7 @@
 "use client"
 
 import BreadcrumbComp from "@/components/Crumbs";
-import { Toaster } from "@/components/ui/sonner";
+
 import { SidebarProvider } from "@/components/ui/sidebar";
 import { AppSidebar } from "@/components/ui/app-sidebar";
 import { usePathname } from "next/navigation";
@@ -29,7 +29,7 @@ export default function DashboardLayout({
                     </div>
                 </div>
             </SidebarProvider>
-            <Toaster />
+
         </div>
     );
 }

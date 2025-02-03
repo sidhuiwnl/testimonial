@@ -34,7 +34,8 @@ import TweetsDisplaySkeleton from "./skeletons/TweetDisplaySkeleton";
 interface TweetInfo {
   profile: string;
   username: string;
-  handle: string;
+  handle: string | null;
+  jobTitle: string | null;
   tweetContent: string;
   verified: boolean;
   id: string;
@@ -42,6 +43,7 @@ interface TweetInfo {
   createdAt: Date;
   images: string[];
   status: string;
+  rating: number;
 }
 
 interface ReviewProps {

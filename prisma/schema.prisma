@@ -71,7 +71,8 @@ model TweetReview {
   id           String   @id
   profile      String
   username     String
-  handle       String   @unique
+  handle       String?
+  jobTitle     String?
   tweetContent String
   verified     Boolean
   userId       String
@@ -79,6 +80,7 @@ model TweetReview {
   createdAt    DateTime
   images       String[]
   status       String   @default("pending")
+  rating       Int      @default(0)
 
   @@map("tweetreview")
 }

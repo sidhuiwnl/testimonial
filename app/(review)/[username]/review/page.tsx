@@ -1,7 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Camera, Pencil, Upload, Sparkles, ImageIcon } from "lucide-react"
+import { Camera, Pencil, Upload, Sparkles } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { motion, AnimatePresence } from "framer-motion"
 import {
@@ -15,6 +15,9 @@ import {
 
 import {useSession} from "@/app/lib/auth-client";
 import Link from "next/link";
+import CustomUploadButton from "@/components/upload-button";
+
+
 
 export default function ReviewForm() {
     const session = useSession()
@@ -24,6 +27,7 @@ export default function ReviewForm() {
     const [uploadProgress, setUploadProgress] = useState(0)
 
     const handleDrag = (e: React.DragEvent) => {
+
         e.preventDefault()
         e.stopPropagation()
         if (e.type === "dragenter" || e.type === "dragover") {
@@ -88,9 +92,11 @@ export default function ReviewForm() {
                         onDragLeave={handleDrag}
                         onDragOver={handleDrag}
                         onDrop={(e) => {
+
                             handleDrag(e)
                             simulateUpload()
                         }}
+
                         whileHover={{ scale: 1.01 }}
                         animate={{ borderColor: dragActive ? "hsl(var(--primary))" : "hsl(var(--muted-foreground))" }}
                     >
@@ -133,16 +139,21 @@ export default function ReviewForm() {
                     </span>
                                     ))}
                                 </div>
-                                <Button variant="secondary" className="relative group">
-                                    <ImageIcon className="w-4 h-4 mr-2 transition-transform group-hover:scale-110" />
-                                    Choose Files
-                                    <input
-                                        type="file"
-                                        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
-                                        accept="image/*,video/*"
-                                        onChange={() => simulateUpload()}
-                                    />
-                                </Button>
+                                {/*<Button variant="secondary" className="relative group">*/}
+                                {/*    <ImageIcon className="w-4 h-4 mr-2 transition-transform group-hover:scale-110" />*/}
+                                {/*    Choose Files*/}
+                                {/*    */}
+                                {/*    <input*/}
+                                {/*        type="file"*/}
+                                {/*        className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"*/}
+                                {/*        accept="image/*,video/*"*/}
+                                {/*        onChange={() => {*/}
+
+                                {/*        }}*/}
+                                {/*    />*/}
+                                {/*</Button>*/}
+                                <CustomUploadButton/>
+
                             </motion.div>
                         </div>
                     </motion.div>

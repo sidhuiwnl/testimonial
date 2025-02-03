@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-
+import {Toaster} from "@/components/ui/sonner";
 import "./globals.css";
 
 import { Plus_Jakarta_Sans } from "next/font/google";
@@ -25,6 +25,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${jakarta.className} antialiased flex`}>
         {children}
+      <Toaster />
       </body>
     </html>
   );

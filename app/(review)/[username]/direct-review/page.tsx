@@ -1,12 +1,14 @@
 "use client"
 
-import { useState } from "react"
+import { useState,useEffect } from "react"
 import { motion, AnimatePresence } from "framer-motion"
 import { Upload, Star, Sparkles, ChevronRight, ChevronLeft } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { cn } from "@/app/lib/utils"
+import {addTweet} from "@/server/queries";
+import {useSession} from "@/app/lib/auth-client";
 
 const emojis = [
     { emoji: "😠", label: "Angry", color: "from-red-500" },
@@ -17,14 +19,41 @@ const emojis = [
 ]
 
 export default function ReviewForm() {
-    const [step, setStep] = useState(0)
+    const session = useSession();
+    const user = session.data?.user;
+    const [step, setStep] = useState(0);
+    const[mediaFile, setMediaFile] = useState<string | null>(null);
     const [rating, setRating] = useState<number | null>(null)
     const [imagePreview, setImagePreview] = useState<string | null>(null)
     const [formData, setFormData] = useState({
         name: "",
         jobTitle: "",
         review: "",
+
     })
+
+    useEffect(() => {
+        const url = localStorage.getItem("uploadedFileUrl");
+        setMediaFile(url);
+        localStorage.removeItem("uploadedFileUrl");
+    },[])
+
+    async function handleSubmit() {
+        if(user) {
+            await addTweet({
+               user,
+                username : formData.name,
+                handle : formData.jobTitle,
+                tweetContent : formData.review,
+                isVerified : false,
+                userImage : imagePreview || "",
+                mediaFiles : [mediaFile ?? ""] ,
+                rating : rating || 0
+            })
+        }
+
+    }
+
 
     const handleImageUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0]
@@ -58,7 +87,7 @@ export default function ReviewForm() {
                 <div className="absolute inset-0 bg-white/60 dark:bg-black/60 backdrop-blur-xl rounded-3xl" />
 
                 <div className="relative p-8 shadow-xl rounded-3xl">
-                    {/* Stepper */}
+
                     <div className="flex justify-center mb-8">
                         {steps.map((s, i) => (
                             <div key={i} className="flex items-center">
@@ -218,8 +247,8 @@ export default function ReviewForm() {
                                 if (step < steps.length - 1) {
                                     setStep(step + 1)
                                 } else {
-                                    // Handle form submission
-                                    console.log("Form submitted:", { ...formData, rating })
+
+                                    handleSubmit()
                                 }
                             }}
                         >

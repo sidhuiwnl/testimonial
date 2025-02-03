@@ -1,6 +1,6 @@
 import {Card, CardContent} from "@/components/ui/card";
 import {Button} from "@/components/ui/button";
-import {createTemplate} from "@/app/actions/action";
+import {createTemplate} from "@/server/queries";
 import {useRouter} from "next/navigation";
 import {useState} from "react";
 import {Templates} from "@prisma/client";
